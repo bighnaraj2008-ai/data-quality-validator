@@ -1,18 +1,23 @@
 """Core Data Quality Validation Engine.
 
 Orchestrates modular checkers across schema drift, null values,
-row duplicates, and numerical boundaries into an aggregated validation report.
+row duplicates, and numerical boundaries into an aggregated validation report,
+with robust exception handling and execution telemetry.
 """
 
 from __future__ import annotations
 
 from enum import Enum
 import json
+import logging
 from pathlib import Path
 import time
+import traceback
 from typing import Any, Dict, List, Optional, Union
 
 import pandas as pd
+
+logger = logging.getLogger(__name__)
 
 
 class CheckStatus(str, Enum):
@@ -34,6 +39,7 @@ class CheckResult:
         metrics: Optional[Dict[str, Any]] = None,
         offending_sample: Optional[List[Dict[str, Any]]] = None,
         execution_time_ms: float = 0.0,
+        error_trace: Optional[str] = None,
     ) -> None:
         self.name = name
         self.status = CheckStatus(status) if isinstance(status, str) else status
@@ -41,9 +47,10 @@ class CheckResult:
         self.metrics = metrics or {}
         self.offending_sample = offending_sample or []
         self.execution_time_ms = execution_time_ms
+        self.error_trace = error_trace
 
     def to_dict(self) -> Dict[str, Any]:
-        return {
+        data = {
             "name": self.name,
             "status": self.status.value,
             "message": self.message,
@@ -51,6 +58,9 @@ class CheckResult:
             "offending_sample": self.offending_sample,
             "execution_time_ms": round(self.execution_time_ms, 3),
         }
+        if self.error_trace:
+            data["error_trace"] = self.error_trace
+        return data
 
 
 class BaselineSchema:
@@ -76,6 +86,8 @@ class BaselineSchema:
     @classmethod
     def from_json_file(cls, path: Union[str, Path]) -> BaselineSchema:
         path = Path(path)
+        if not path.exists():
+            raise FileNotFoundError(f"Schema file not found at: {path}")
         with path.open("r", encoding="utf-8") as f:
             data = json.load(f)
         return cls.from_dict(data)
@@ -132,9 +144,12 @@ class ValidationReport:
             "results": [r.to_dict() for r in self.results],
         }
 
+    def to_json(self, indent: int = 2) -> str:
+        return json.dumps(self.to_dict(), indent=indent)
+
 
 class DataValidator:
-    """Core data quality inspection runner class."""
+    """Core data quality inspection runner class with robust error isolation."""
 
     def __init__(
         self,
@@ -146,11 +161,30 @@ class DataValidator:
         self.null_threshold = null_threshold
         self.strict_schema = strict_schema
 
+    def _execute_check(self, check_name: str, check_fn) -> CheckResult:
+        """Safely execute a check function with time measurement and exception handling."""
+        start = time.perf_counter()
+        try:
+            result = check_fn()
+            result.execution_time_ms = (time.perf_counter() - start) * 1000.0
+            return result
+        except Exception as exc:
+            elapsed = (time.perf_counter() - start) * 1000.0
+            logger.exception("Validation check '%s' raised unexpected exception: %s", check_name, exc)
+            return CheckResult(
+                name=check_name,
+                status=CheckStatus.ERROR,
+                message=f"Check failed due to unexpected error: {exc}",
+                execution_time_ms=elapsed,
+                error_trace=traceback.format_exc(),
+            )
+
     def validate_df(
         self,
         df: pd.DataFrame,
         dataset_path: str = "in_memory",
         column_ranges: Optional[Dict[str, Dict[str, float]]] = None,
+        non_nullable_cols: Optional[List[str]] = None,
     ) -> ValidationReport:
         from validator.drift_detector import DriftDetector
         from validator.null_checker import NullChecker
@@ -160,20 +194,44 @@ class DataValidator:
         start_time = time.perf_counter()
         results: List[CheckResult] = []
 
+        # 1. Schema Drift Check
         if self.schema:
             drift_detector = DriftDetector(strict=self.strict_schema or self.schema.strict)
-            results.append(drift_detector.check_drift(df, self.schema))
+            results.append(
+                self._execute_check(
+                    "schema_drift",
+                    lambda: drift_detector.check_drift(df, self.schema),
+                )
+            )
 
+        # 2. Null Value Check
         null_checker = NullChecker(default_threshold=self.null_threshold)
-        results.append(null_checker.check_nulls(df))
+        results.append(
+            self._execute_check(
+                "null_values",
+                lambda: null_checker.check_nulls(df, non_nullable_cols=non_nullable_cols),
+            )
+        )
 
+        # 3. Duplicate Row / Key Check
         pk_cols = self.schema.primary_key if self.schema else None
         duplicate_checker = DuplicateChecker()
-        results.append(duplicate_checker.check_duplicates(df, primary_key=pk_cols))
+        results.append(
+            self._execute_check(
+                "duplicate_rows",
+                lambda: duplicate_checker.check_duplicates(df, primary_key=pk_cols),
+            )
+        )
 
+        # 4. Numerical Range Check
         if column_ranges:
             range_checker = RangeChecker()
-            results.append(range_checker.check_ranges(df, column_ranges))
+            results.append(
+                self._execute_check(
+                    "range_boundaries",
+                    lambda: range_checker.check_ranges(df, column_ranges),
+                )
+            )
 
         duration_ms = (time.perf_counter() - start_time) * 1000.0
         return ValidationReport(
@@ -183,3 +241,48 @@ class DataValidator:
             results=results,
             duration_ms=duration_ms,
         )
+
+    def validate_csv(
+        self,
+        csv_path: Union[str, Path],
+        column_ranges: Optional[Dict[str, Dict[str, float]]] = None,
+        non_nullable_cols: Optional[List[str]] = None,
+    ) -> ValidationReport:
+        path = Path(csv_path)
+        if not path.exists():
+            return ValidationReport(
+                dataset_path=str(csv_path),
+                total_rows=0,
+                total_columns=0,
+                results=[
+                    CheckResult(
+                        name="file_read",
+                        status=CheckStatus.ERROR,
+                        message=f"File not found: {csv_path}",
+                    )
+                ],
+                duration_ms=0.0,
+            )
+        try:
+            df = pd.read_csv(path)
+            return self.validate_df(
+                df,
+                dataset_path=str(csv_path),
+                column_ranges=column_ranges,
+                non_nullable_cols=non_nullable_cols,
+            )
+        except Exception as exc:
+            return ValidationReport(
+                dataset_path=str(csv_path),
+                total_rows=0,
+                total_columns=0,
+                results=[
+                    CheckResult(
+                        name="csv_parse",
+                        status=CheckStatus.ERROR,
+                        message=f"Failed to parse CSV file: {exc}",
+                        error_trace=traceback.format_exc(),
+                    )
+                ],
+                duration_ms=0.0,
+            )
