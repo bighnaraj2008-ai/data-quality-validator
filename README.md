@@ -15,3 +15,32 @@ A high-performance, modular data validation and quality assurance framework desi
 - **Range & Boundary Verification**: Validates numerical bounds and statistical bounds.
 - **Declarative YAML Rules**: Flexible configuration with environment variable override support.
 - **Audit Reports**: Produces machine-readable JSON metrics and markdown summaries.
+
+---
+
+## Modular Architecture
+
+The framework is decoupled into distinct subsystems for maintainability and scalability:
+
+```text
+data-quality-validator/
+├── src/validator/             # Core Python validation engine
+│   ├── core.py                # Pipeline runner & error-isolated orchestrator
+│   ├── null_checker.py        # Null distribution & non-nullable assertions
+│   ├── duplicate_checker.py   # Row & PK uniqueness validator
+│   ├── drift_detector.py      # Schema drift & column type checking
+│   └── range_checker.py       # Numerical range boundary check
+├── src/config/                # Declarative configuration subsystem
+│   ├── loader.py              # YAML parser with DQ_ environment overrides
+│   └── validator_config.yaml  # Default rules & thresholds template
+├── sql/checks/                # Pure SQL verification templates
+│   ├── null_distribution.sql  # Database-native null checks
+│   ├── duplicate_keys.sql     # Key collision queries
+│   ├── schema_drift.sql       # Information schema drift views
+│   └── row_count_anomaly.sql  # Row volume anomaly detection
+└── scripts/                   # CLI execution & telemetry reporting
+    ├── run_validation.py      # CLI execution entrypoint
+    └── generate_report.py     # JSON and Markdown telemetry exporter
+```
+
+Detailed architectural diagrams and pipeline execution flow are documented in [`docs/ARCHITECTURE_REFACTOR.md`](docs/ARCHITECTURE_REFACTOR.md).
