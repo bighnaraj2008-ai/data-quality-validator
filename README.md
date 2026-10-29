@@ -90,3 +90,19 @@ Execute the automated test suite:
 ```bash
 pytest tests/ -v
 ```
+
+---
+
+## Troubleshooting & FAQ
+
+#### Q: How do I override default thresholds without modifying the YAML configuration?
+**A:** Set environment variables prefixed with `DQ_`. For instance, to increase the allowable null threshold for amounts:
+```bash
+export DQ_CHECKS__NULL_CHECK__THRESHOLDS__AMOUNT=0.10
+```
+
+#### Q: The schema drift check flags columns that are dynamically added upstream. How do I ignore them?
+**A:** In `src/config/validator_config.yaml`, set `checks.schema_drift.allow_unexpected_columns: true` to prevent unmapped columns from failing the pipeline.
+
+#### Q: How can I debug pure SQL checks locally without connecting to a remote warehouse?
+**A:** Use DuckDB or SQLite with the SQL templates under `sql/checks/`. For query syntax rules, refer to [`docs/SQL_CHECKS_GUIDE.md`](docs/SQL_CHECKS_GUIDE.md).
