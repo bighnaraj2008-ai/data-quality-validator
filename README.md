@@ -44,3 +44,44 @@ data-quality-validator/
 ```
 
 Detailed architectural diagrams and pipeline execution flow are documented in [`docs/ARCHITECTURE_REFACTOR.md`](docs/ARCHITECTURE_REFACTOR.md).
+
+---
+
+## Quickstart
+
+### 1. Installation
+
+Clone the repository and set up a Python virtual environment:
+
+```bash
+git clone https://github.com/bighnaraj2008-ai/data-quality-validator.git
+cd data-quality-validator
+
+python -m venv venv
+# Linux / macOS
+source venv/bin/activate
+# Windows PowerShell
+.\venv\Scripts\Activate.ps1
+
+pip install -e .
+```
+
+### 2. Running Data Validation
+
+Execute the pipeline against a CSV or sample dataset:
+
+```bash
+# Run validation via the CLI wrapper
+python scripts/run_validation.py --data sample_data.csv --config src/config/validator_config.yaml
+
+# Generate an inspection report
+python scripts/generate_report.py --input sample_data.csv --output report.json --format json
+```
+
+### 3. Running Unit Tests
+
+Execute the automated test suite:
+
+```bash
+pytest tests/ -v
+```
