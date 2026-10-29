@@ -1,0 +1,29 @@
+# Data Quality Validator Configuration Template (Day 1)
+version: "1.0"
+environment: "production"
+
+database:
+  backend: "sqlite"
+  path: "dq_audit.db"
+  echo: false
+
+thresholds:
+  default_null_threshold: 0.05
+  allow_duplicates: false
+  strict_schema: true
+
+rules:
+  null_checks:
+    non_nullable:
+      - "id"
+      - "email"
+    column_thresholds:
+      phone_number: 0.20
+      address: 0.15
+
+  ranges:
+    age:
+      min: 0
+      max: 120
+    income:
+      min: 0.0
