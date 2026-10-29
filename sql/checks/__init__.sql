@@ -1,0 +1,12 @@
+-- ============================================================================
+-- SQL Checks Module Header Template
+-- Project: Data Quality Validator (Day 1)
+--
+-- Standardized SQL templates for database-side data quality validation:
+-- 1. null_distribution.sql   : per-column null counts and threshold validation
+-- 2. duplicate_keys.sql      : primary key and composite key uniqueness verification
+-- 3. schema_drift.sql        : schema column mapping and drift detection view
+-- 4. row_count_anomaly.sql   : row count threshold and volume anomaly detection
+--
+-- Compatible with ANSI SQL, PostgreSQL, MySQL, and SQLite dialects.
+-- ============================================================================
