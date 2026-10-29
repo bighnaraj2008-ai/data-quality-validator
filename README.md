@@ -106,3 +106,17 @@ export DQ_CHECKS__NULL_CHECK__THRESHOLDS__AMOUNT=0.10
 
 #### Q: How can I debug pure SQL checks locally without connecting to a remote warehouse?
 **A:** Use DuckDB or SQLite with the SQL templates under `sql/checks/`. For query syntax rules, refer to [`docs/SQL_CHECKS_GUIDE.md`](docs/SQL_CHECKS_GUIDE.md).
+
+---
+
+## Project Status & Roadmap
+
+- **Day 1 Milestone Completed** :white_check_mark:
+  - Architecture decoupled into isolated modular checkers (`null`, `duplicate`, `drift`, `range`).
+  - YAML configuration loader with dynamic environment variable overrides implemented.
+  - Pure SQL check template library initialized.
+  - Comprehensive unit test suite with 100% pass rate.
+  - Continuous integration workflows configured with SQLFluff and Pytest.
+- **Upcoming Day 2 Milestone**:
+  - Cloud warehouse integration (Snowflake, BigQuery adapters).
+  - Parallel asynchronous execution engine for multi-table validations.
