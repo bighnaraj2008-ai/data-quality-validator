@@ -1,0 +1,5 @@
+id,name,age,income,notes
+1,Alice Smith,34,75000.00,onboarded
+2,Bob Jones,29,,Q1 review
+2,Bob Jones,29,62000.50,duplicate entry
+4,David Wilson,38,71000.25,
