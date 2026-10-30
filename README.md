@@ -158,3 +158,7 @@ export DQ_CHECKS__NULL_CHECK__THRESHOLDS__AMOUNT=0.10
 
 
 For details on testing conventions and PR test standards, refer to [`CONTRIBUTING.md`](CONTRIBUTING.md).
+
+## License
+
+This project is licensed under the MIT License - see the [`LICENSE`](LICENSE) file for details.
