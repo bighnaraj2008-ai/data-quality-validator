@@ -1,0 +1,6 @@
+id,name,email,department,salary
+101,John Doe,john.doe@example.com,Engineering,85000.00
+102,Jane Smith,jane.smith@example.com,Product,92000.00
+101,John Duplicate,john.dup@example.com,Engineering,85000.00
+103,Alex Ray,alex.ray@example.com,Design,78000.00
+102,Jane Clone,jane.clone@example.com,Marketing,92000.00
