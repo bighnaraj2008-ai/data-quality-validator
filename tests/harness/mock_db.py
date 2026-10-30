@@ -7,6 +7,7 @@ for validating SQL check templates without requiring a live external database.
 from __future__ import annotations
 
 import sqlite3
+import time
 from typing import Any, Dict, List, Optional, Tuple, Union
 import pandas as pd
 
@@ -16,12 +17,15 @@ class MockCursor:
 
     def __init__(self, sqlite_cursor: sqlite3.Cursor) -> None:
         self._cursor = sqlite_cursor
+        self.last_execution_time_ms: float = 0.0
 
     def execute(self, query: str, parameters: Optional[Union[Dict[str, Any], Tuple[Any, ...]]] = None) -> MockCursor:
+        start = time.perf_counter()
         if parameters:
             self._cursor.execute(query, parameters)
         else:
             self._cursor.execute(query)
+        self.last_execution_time_ms = (time.perf_counter() - start) * 1000.0
         return self
 
     def fetchall(self) -> List[Tuple[Any, ...]]:
@@ -51,6 +55,7 @@ class MockConnection:
         return cur
 
     def register_dataframe(self, table_name: str, df: pd.DataFrame) -> None:
+        """Register a pandas DataFrame as a queryable SQLite table."""
         df.to_sql(table_name, self._conn, if_exists="replace", index=False)
 
     def commit(self) -> None:
