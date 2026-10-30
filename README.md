@@ -93,6 +93,31 @@ pytest tests/ -v
 
 ---
 
+
+---
+
+## Testing & Test Automation
+
+The repository includes a comprehensive, multi-layer test suite covering core components, edge cases, integration scenarios, and performance profiling.
+
+### Running Tests Locally
+
+```bash
+# Run entire test suite
+pytest tests/ -v
+
+# Run edge-case tests specifically
+pytest tests/edge_cases/ -v
+
+# Run integration tests with mock database
+pytest tests/integration/ -v
+
+# Execute automated test runner with fixture verification
+bash scripts/run_unit_tests.sh
+```
+
+For complete architectural details and test coverage matrices, see [`docs/TEST_COVERAGE.md`](docs/TEST_COVERAGE.md).
+
 ## Troubleshooting & FAQ
 
 #### Q: How do I override default thresholds without modifying the YAML configuration?
