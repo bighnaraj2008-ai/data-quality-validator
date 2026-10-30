@@ -5,6 +5,19 @@ All notable changes to the `data-quality-validator` project will be documented i
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - 2026-10-30
+
+### Added
+- Comprehensive test fixture catalog under `tests/fixtures/` (`clean_dataset.csv`, `drifted_dataset.csv`, `null_anomaly.json`, `duplicate_keys.csv`).
+- Dedicated test harness modules: `tests/harness/mock_db.py` for simulated warehouse queries and `tests/harness/assertions.py` for quality score assertions.
+- Modular edge-case test suites in `tests/edge_cases/` for type mismatches, empty payloads, threshold breach limits, and silent drift.
+- Integration test suite in `tests/integration/` validating full pipeline flows and pure SQL check templates.
+- Performance and stress benchmarks in `tests/performance/` and `tests/stress/` with > 10,000 rows/second throughput assertions.
+- Memory consumption profiling suite in `tests/memory/test_memory_profiler.py` ensuring < 60MB peak memory footprint.
+- Automation test scripts: `scripts/run_unit_tests.sh`, `scripts/run_profiler.sh`, and `scripts/generate_test_report.py`.
+- Documentation additions: `docs/TEST_COVERAGE.md`, `docs/EDGE_CASES.md`, `docs/FIXTURE_GUIDE.md`, and `docs/BENCHMARK_TEMPLATE.md`.
+- GitHub Actions CI workflow `.github/workflows/test_coverage.yml` for continuous testing and coverage verification.
+
 ## [0.2.0] - 2026-10-29
 
 ### Added
