@@ -152,3 +152,9 @@ export DQ_CHECKS__NULL_CHECK__THRESHOLDS__AMOUNT=0.10
 - **Upcoming Day 2 Milestone**:
   - Cloud warehouse integration (Snowflake, BigQuery adapters).
   - Parallel asynchronous execution engine for multi-table validations.
+
+
+## Contributing
+
+
+For details on testing conventions and PR test standards, refer to [`CONTRIBUTING.md`](CONTRIBUTING.md).
