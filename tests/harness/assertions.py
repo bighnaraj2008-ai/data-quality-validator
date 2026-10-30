@@ -25,7 +25,8 @@ def assert_quality_score(report: ValidationReport, min_score: float) -> None:
     """Assert that the overall quality score meets or exceeds minimum threshold."""
     actual_score = calculate_quality_score(report)
     assert actual_score >= min_score, (
-        f"Quality score {actual_score:.2f}% below threshold {min_score:.2f}%"
+        f"Quality score {actual_score:.2f}% below threshold {min_score:.2f}%. "
+        f"Passed: {report.passed_checks}, Failed: {report.failed_checks}, Warnings: {report.warning_checks}."
     )
 
 
@@ -34,13 +35,15 @@ def assert_check_status(
     check_name: str,
     expected_status: Union[CheckStatus, str],
 ) -> None:
-    """Assert that a specific check rule produced the expected status."""
+    """Assert that a specific check rule produced the expected status with detailed context."""
     expected = CheckStatus(expected_status) if isinstance(expected_status, str) else expected_status
     match = next((r for r in report.results if r.name == check_name), None)
-    assert match is not None, f"Check rule '{check_name}' was not executed in report."
+    assert match is not None, (
+        f"Check rule '{check_name}' was not executed. Executed checks: {[r.name for r in report.results]}"
+    )
     assert match.status == expected, (
         f"Check '{check_name}' status mismatch: expected {expected.value}, got {match.status.value}. "
-        f"Message: {match.message}"
+        f"Diagnostic message: {match.message}. Metrics: {match.metrics}"
     )
 
 
@@ -49,7 +52,7 @@ def assert_no_errors(report: ValidationReport) -> None:
     error_results = [r for r in report.results if r.status == CheckStatus.ERROR]
     assert len(error_results) == 0, (
         f"Validation produced {len(error_results)} execution errors: "
-        f"{[r.message for r in error_results]}"
+        f"{[f'{r.name}: {r.message}' for r in error_results]}"
     )
 
 
