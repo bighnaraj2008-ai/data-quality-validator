@@ -149,7 +149,13 @@ export DQ_CHECKS__NULL_CHECK__THRESHOLDS__AMOUNT=0.10
   - Pure SQL check template library initialized.
   - Comprehensive unit test suite with 100% pass rate.
   - Continuous integration workflows configured with SQLFluff and Pytest.
-- **Upcoming Day 2 Milestone**:
+- **Day 2 Milestone Completed** :white_check_mark:
+  - Standardized fixture catalog (`clean_dataset.csv`, `drifted_dataset.csv`, `null_anomaly.json`, `duplicate_keys.csv`).
+  - Modular edge-case test suites for type mismatch, empty payload, and threshold breaches.
+  - End-to-end integration and pure SQL check verification test suites.
+  - Performance benchmarks (> 10,000 rows/s) and memory consumption profiling (< 60MB).
+  - Automated test runners and documentation guides (`TEST_COVERAGE.md`, `EDGE_CASES.md`, `FIXTURE_GUIDE.md`, `BENCHMARK_TEMPLATE.md`).
+- **Upcoming Day 3 Milestone**:
   - Cloud warehouse integration (Snowflake, BigQuery adapters).
   - Parallel asynchronous execution engine for multi-table validations.
 
