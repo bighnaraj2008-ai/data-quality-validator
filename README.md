@@ -121,6 +121,12 @@ For complete architectural details and test coverage matrices, see [`docs/TEST_C
 
 ## Troubleshooting & FAQ
 
+#### Q: How do I run only the edge-case tests without performance benchmarks?
+**A:** Use pytest path filtering: `pytest tests/edge_cases/ -v`.
+
+#### Q: How can I debug a quality assertion failure in custom tests?
+**A:** Import `assert_check_status` and `calculate_quality_score` from `tests.harness.assertions` for descriptive diagnostic output.
+
 #### Q: How do I override default thresholds without modifying the YAML configuration?
 **A:** Set environment variables prefixed with `DQ_`. For instance, to increase the allowable null threshold for amounts:
 ```bash
