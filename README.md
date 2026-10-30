@@ -116,7 +116,7 @@ pytest tests/integration/ -v
 bash scripts/run_unit_tests.sh
 ```
 
-For complete architectural details and test coverage matrices, see [`docs/TEST_COVERAGE.md`](docs/TEST_COVERAGE.md) and [`docs/FIXTURE_GUIDE.md`](docs/FIXTURE_GUIDE.md).
+For complete architectural details and test coverage matrices, see [`docs/TEST_COVERAGE.md`](docs/TEST_COVERAGE.md) and [`docs/FIXTURE_GUIDE.md`](docs/FIXTURE_GUIDE.md), and [`docs/BENCHMARK_TEMPLATE.md`](docs/BENCHMARK_TEMPLATE.md).
 
 ## Troubleshooting & FAQ
 
