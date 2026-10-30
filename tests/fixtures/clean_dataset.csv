@@ -1,0 +1,6 @@
+id,name,email,age,income,created_at
+1,Alice Smith,alice@example.com,34,75000.00,2024-01-15
+2,Bob Jones,bob.jones@example.com,29,62000.50,2024-02-03
+3,Carol Davis,carol.davis@example.com,45,98000.00,2024-03-10
+4,David Wilson,david.wilson@example.com,38,71000.25,2024-04-22
+5,Emma Brown,emma.brown@example.com,31,66500.75,2024-05-05
