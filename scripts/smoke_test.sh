@@ -11,7 +11,17 @@ PYTHON_BIN="${PYTHON:-python}"
 TEMP_DATA="smoke_sample.csv"
 TEMP_REPORT="smoke_report.json"
 
-# 1. Create temporary sample CSV
+# 1. Verify test fixtures exist
+echo "Checking core test fixtures..."
+for f in "tests/fixtures/clean_dataset.csv" "tests/fixtures/drifted_dataset.csv"; do
+    if [[ ! -f "$f" ]]; then
+        echo "Missing fixture $f"
+        exit 1
+    fi
+done
+echo "Test fixtures verified"
+
+# 2. Create temporary sample CSV
 cat << 'EOF' > "$TEMP_DATA"
 id,email,age,income
 1,alice@example.com,28,65000.00
@@ -21,24 +31,24 @@ id,email,age,income
 5,emma@example.com,31,73500.25
 EOF
 
-echo "✓ Created synthetic dataset: $TEMP_DATA"
+echo "Created synthetic dataset: $TEMP_DATA"
 
-# 2. Execute CLI validation runner
+# 3. Execute CLI validation runner
 "$PYTHON_BIN" scripts/run_validation.py --data "$TEMP_DATA" --config src/config/validator_config.yaml
-echo "✓ Validation pipeline runner passed successfully"
+echo "Validation pipeline runner passed successfully"
 
-# 3. Generate JSON report
+# 4. Generate JSON report
 "$PYTHON_BIN" scripts/generate_report.py --input "$TEMP_DATA" --output "$TEMP_REPORT" --format json
 if [[ -f "$TEMP_REPORT" ]]; then
-    echo "✓ Telemetry report generated successfully at $TEMP_REPORT"
+    echo "Telemetry report generated successfully at $TEMP_REPORT"
 else
-    echo "✗ Failed to generate telemetry report"
+    echo "Failed to generate telemetry report"
     exit 1
 fi
 
-# 4. Clean up temporary files
+# 5. Clean up temporary files
 rm -f "$TEMP_DATA" "$TEMP_REPORT"
-echo "✓ Temporary test artifacts cleaned up"
+echo "Temporary test artifacts cleaned up"
 
 echo "=========================================="
 echo " All Smoke Tests Passed Successfully!"
