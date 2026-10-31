@@ -265,3 +265,15 @@ We welcome community contributions, custom check modules, and dialect adapters!
 
 - **License:** Distributed under the MIT License. See [`LICENSE`](LICENSE) for terms.
 - **Security:** Review the [Database Security Hardening Guide](docs/SECURITY_HARDENING.md) and [`SECURITY.md`](SECURITY.md) for credential isolation and vulnerability reporting.
+
+---
+
+## Repository Documentation Index
+
+| Architecture & Design | Operations & Security | Testing & Quality | Reference & Standards |
+|:----------------------|:----------------------|:------------------|:----------------------|
+| [System Architecture](docs/ARCHITECTURE.mmd) | [Deployment Runbook](docs/DEPLOYMENT_GUIDE.md) | [Test Coverage Matrix](docs/TEST_COVERAGE.md) | [Python API Reference](docs/API_REFERENCE.md) |
+| [Architecture Refactor](docs/ARCHITECTURE_REFACTOR.md) | [Security Hardening](docs/SECURITY_HARDENING.md) | [Edge Case Suite](docs/EDGE_CASES.md) | [Rule Authoring](docs/RULE_AUTHORING.md) |
+| [SQL Check Catalog](docs/SQL_CHECK_CATALOG.md) | [Incident Playbook](docs/INCIDENT_PLAYBOOK.md) | [Fixture Guide](docs/FIXTURE_GUIDE.md) | [Data Governance](docs/DATA_GOVERNANCE.md) |
+| [SQL Checks Guide](docs/SQL_CHECKS_GUIDE.md) | [Diagnostics Guide](docs/DIAGNOSTICS.md) | [Benchmark Template](docs/BENCHMARK_TEMPLATE.md) | [Engineering Glossary](docs/GLOSSARY.md) |
+| [Performance Tuning](docs/PERFORMANCE_TUNING.md) | [Schema Migration](docs/MIGRATION_V2.md) | [Throughput Report](docs/BENCHMARK_REPORT.md) | [Frequently Asked Questions](docs/FAQ.md) |
