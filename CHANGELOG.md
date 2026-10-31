@@ -5,6 +5,19 @@ All notable changes to the `data-quality-validator` project will be documented i
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.0] - 2026-10-31
+
+### Added
+- Comprehensive YAML rule authoring guide in `docs/RULE_AUTHORING.md` covering rule syntax, threshold parameters, severity mapping, and alert webhooks.
+- In-warehouse pure SQL check catalog in `docs/SQL_CHECK_CATALOG.md` detailing parameter conventions, null checks, uniqueness constraints, and schema drift queries across 5 warehouse dialects.
+- System sequence and component architecture diagrams in `docs/ARCHITECTURE.mmd`.
+- Comprehensive Python API reference in `docs/API_REFERENCE.md` for core validator engine, checkers, and configuration loader.
+- Production deployment runbook in `docs/DEPLOYMENT_GUIDE.md` with Docker containerization, Kubernetes CronJobs, and Airflow DAG integration.
+- Incident diagnostics playbook in `docs/DIAGNOSTICS.md` and schema drift triage runbook in `docs/INCIDENT_PLAYBOOK.md`.
+- Security hardening guidelines in `docs/SECURITY_HARDENING.md` covering read-only roles, SQL injection protection, and credential management.
+- Contribution guidelines in `docs/CONTRIBUTORS_GUIDE.md` and project FAQ in `docs/FAQ.md`.
+- Data engineering glossary in `docs/GLOSSARY.md` and throughput benchmark report in `docs/BENCHMARK_REPORT.md`.
+
 ## [0.3.0] - 2026-10-30
 
 ### Added
@@ -39,5 +52,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 - Added strict `.gitignore` blocking environment files, local caches, and database files.
-
-<!-- Day 2 Test Coverage Sprint Finalized -->
