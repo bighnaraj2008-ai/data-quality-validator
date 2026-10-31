@@ -132,3 +132,38 @@ When validating datasets exceeding RAM limits or residing directly in cloud data
 | Schema Drift | `schema_drift.sql` | Missing columns, unmapped additions, and type mismatches |
 
 For query templates, dialect compatibility matrices (Postgres, SQLite, Snowflake, BigQuery, DuckDB), and execution examples, see the [Pure SQL Check Catalog](docs/SQL_CHECK_CATALOG.md) and [SQL Checks Guide](docs/SQL_CHECKS_GUIDE.md).
+
+---
+
+## Quickstart Guide
+
+### 1. Installation
+
+```bash
+git clone https://github.com/bighnaraj2008-ai/data-quality-validator.git
+cd data-quality-validator
+
+python -m venv venv
+# Linux / macOS
+source venv/bin/activate
+# Windows PowerShell
+.\venv\Scripts\Activate.ps1
+
+pip install -e .
+```
+
+### 2. Running Data Validation
+
+```bash
+# Validate dataset against YAML configuration
+python scripts/run_validation.py --data sample_data.csv --config src/config/validator_config.yaml
+
+# Generate JSON execution telemetry report
+python scripts/generate_report.py --input sample_data.csv --output reports/validation_report.json --format json
+```
+
+### 3. Running Unit Tests
+
+```bash
+pytest tests/ -v
+```
