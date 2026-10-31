@@ -1,0 +1,57 @@
+{
+  "execution_metadata": {
+    "dataset_name": "orders_landing",
+    "dataset_path": "data/landing/orders_20261031.csv",
+    "timestamp": "2026-10-31T12:00:00+05:30",
+    "validator_version": "1.0.0",
+    "execution_duration_ms": 142.3,
+    "total_rows_inspected": 50000,
+    "total_columns_inspected": 12
+  },
+  "summary": {
+    "overall_status": "PASS",
+    "checks_evaluated": 4,
+    "checks_passed": 4,
+    "checks_failed": 0,
+    "checks_warning": 0,
+    "quality_score": 100.0
+  },
+  "results": [
+    {
+      "check_name": "null_values",
+      "status": "PASS",
+      "message": "All columns within allowable null thresholds; non-nullable columns have 0 nulls.",
+      "metrics": {
+        "max_observed_null_rate": 0.012,
+        "violating_columns_count": 0
+      }
+    },
+    {
+      "check_name": "duplicates",
+      "status": "PASS",
+      "message": "Row uniqueness verified; 0 duplicate primary keys detected.",
+      "metrics": {
+        "duplicate_rows": 0,
+        "duplicate_primary_keys": 0
+      }
+    },
+    {
+      "check_name": "schema_drift",
+      "status": "PASS",
+      "message": "Incoming schema matches baseline reference perfectly.",
+      "metrics": {
+        "missing_columns": [],
+        "unexpected_columns": [],
+        "type_mismatches": []
+      }
+    },
+    {
+      "check_name": "range_boundaries",
+      "status": "PASS",
+      "message": "All numerical values fall within configured [min, max] boundaries.",
+      "metrics": {
+        "boundary_violations": 0
+      }
+    }
+  ]
+}
