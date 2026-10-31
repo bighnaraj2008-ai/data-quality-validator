@@ -213,3 +213,10 @@ We welcome community contributions, custom check modules, and dialect adapters!
 - Review our [Contribution Guidelines](docs/CONTRIBUTORS_GUIDE.md) and [`CONTRIBUTING.md`](CONTRIBUTING.md).
 - Follow our coding standards (Flake8 linting, type annotations, unit tests).
 - Read the [Test Coverage Guide](docs/TEST_COVERAGE.md) and [Fixture Authoring Guide](docs/FIXTURE_GUIDE.md).
+
+---
+
+## License & Security
+
+- **License:** Distributed under the MIT License. See [`LICENSE`](LICENSE) for terms.
+- **Security:** Review the [Database Security Hardening Guide](docs/SECURITY_HARDENING.md) and [`SECURITY.md`](SECURITY.md) for credential isolation and vulnerability reporting.
