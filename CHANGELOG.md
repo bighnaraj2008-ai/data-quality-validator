@@ -17,6 +17,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Security hardening guidelines in `docs/SECURITY_HARDENING.md` covering read-only roles, SQL injection protection, and credential management.
 - Contribution guidelines in `docs/CONTRIBUTORS_GUIDE.md` and project FAQ in `docs/FAQ.md`.
 - Data engineering glossary in `docs/GLOSSARY.md` and throughput benchmark report in `docs/BENCHMARK_REPORT.md`.
+- Automated markdown documentation link and syntax validation tool in `scripts/validate_docs.py`.
+- Documentation integrity CI workflow `.github/workflows/docs_check.yml`.
+- Schema evolution migration guide in `docs/MIGRATION_V2.md`.
+- Performance and query optimization guide in `docs/PERFORMANCE_TUNING.md`.
 
 ## [0.3.0] - 2026-10-30
 
