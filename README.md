@@ -222,6 +222,32 @@ For complete class hierarchies, method signatures, and exceptions, see the [Pyth
 
 ---
 
+---
+
+## Project Status & Roadmap
+
+- **Day 1 Milestone Completed** :white_check_mark:
+  - Architecture decoupled into isolated modular checkers (`null`, `duplicate`, `drift`, `range`).
+  - YAML configuration loader with dynamic environment variable overrides.
+  - Pure SQL check template library initialized.
+  - Comprehensive unit test suite with 100% pass rate.
+  - CI workflows configured with SQLFluff and Pytest.
+- **Day 2 Milestone Completed** :white_check_mark:
+  - Standardized fixture catalog and modular edge-case test suites.
+  - End-to-end integration and pure SQL check verification suites.
+  - Performance benchmarks (> 10,000 rows/s) and memory profiling (< 60 MB).
+  - Documentation guides (`TEST_COVERAGE.md`, `EDGE_CASES.md`, `FIXTURE_GUIDE.md`, `BENCHMARK_TEMPLATE.md`).
+- **Day 3 Milestone Completed** :white_check_mark:
+  - Advanced documentation architecture and comprehensive runbook guides.
+  - Pure SQL check catalog covering nulls, uniqueness, row count anomaly, and drift.
+  - Interactive Mermaid sequence and component architecture diagrams.
+  - Automated documentation link validator and CI integration workflow.
+- **Upcoming Day 4 Milestone**:
+  - Cloud warehouse direct adapters (Snowflake, BigQuery).
+  - Parallel asynchronous execution engine for multi-table validations.
+
+---
+
 ## Contributing
 
 We welcome community contributions, custom check modules, and dialect adapters!
