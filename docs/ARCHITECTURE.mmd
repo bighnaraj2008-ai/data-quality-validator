@@ -1,0 +1,48 @@
+%% Data Quality Validator — Pipeline Sequence Flow
+sequenceDiagram
+    autonumber
+    actor Client as Data Pipeline / CLI
+    participant Config as ConfigLoader
+    participant Engine as DataValidator Core
+    participant Ingest as Ingestion Layer
+    participant PythonChecks as Checker Modules
+    participant SQLChecks as SQL Check Engine
+    participant Report as ValidationReport
+    participant Alert as Alert Webhook
+
+    Client->>Engine: validate(dataset_path, config_path)
+    Engine->>Config: load(config_path)
+    Config-->>Engine: validated_config_dict
+
+    Engine->>Ingest: read_dataframe(dataset_path)
+    Ingest-->>Engine: DataFrame (Pandas / Arrow)
+
+    rect rgb(240, 248, 255)
+        note over Engine,PythonChecks: In-Memory Validation Engine
+        Engine->>PythonChecks: check_nulls(df, rules.null_checks)
+        PythonChecks-->>Engine: CheckResult(null_values)
+
+        Engine->>PythonChecks: check_duplicates(df, rules.uniqueness)
+        PythonChecks-->>Engine: CheckResult(duplicates)
+
+        Engine->>PythonChecks: detect_drift(df, baseline_schema)
+        PythonChecks-->>Engine: CheckResult(schema_drift)
+
+        Engine->>PythonChecks: check_ranges(df, rules.ranges)
+        PythonChecks-->>Engine: CheckResult(ranges)
+    end
+
+    opt In-Warehouse SQL Execution (if database configured)
+        Engine->>SQLChecks: execute_template(sql/checks/*.sql, bind_params)
+        SQLChecks-->>Engine: SQLCheckResults
+    end
+
+    Engine->>Report: build(check_results, execution_metadata)
+    Report-->>Engine: ValidationReport(overall_status, summary)
+
+    alt Status is WARN or FAIL
+        Engine->>Alert: post_alert(webhook_url, payload)
+        Alert-->>Engine: HTTP 200 OK
+    end
+
+    Engine-->>Client: ValidationReport & exit_code (0 or 1)
