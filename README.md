@@ -254,6 +254,7 @@ For complete class hierarchies, method signatures, and exceptions, see the [Pyth
 We welcome community contributions, custom check modules, and dialect adapters!
 
 - Review our [Contribution Guidelines](docs/CONTRIBUTORS_GUIDE.md) and [`CONTRIBUTING.md`](CONTRIBUTING.md).
+- Ensure all automated markdown syntax checks pass: `pytest tests/docs/`.
 - Follow our coding standards (Flake8 linting, type annotations, unit tests).
 - Read the [Test Coverage Guide](docs/TEST_COVERAGE.md) and [Fixture Authoring Guide](docs/FIXTURE_GUIDE.md).
 
