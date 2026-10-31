@@ -194,3 +194,12 @@ print(f"Passed: {len(report.passed_checks)} | Failed: {len(report.failed_checks)
 ```
 
 For complete class hierarchies, method signatures, and exceptions, see the [Python API Reference](docs/API_REFERENCE.md).
+
+---
+
+## Troubleshooting & Diagnostics
+
+- **Dynamic Threshold Overrides:** Override rules at runtime without modifying files using `DQ_` environment variables (e.g. `export DQ_NULL_THRESHOLD=0.10`).
+- **Debugging Failures:** Consult the [Diagnostics Playbook](docs/DIAGNOSTICS.md) for isolating offending records and SQL forensics queries.
+- **Incident Response:** See the [Incident Playbook](docs/INCIDENT_PLAYBOOK.md) for severity classifications and circuit breaker protocols.
+- **Common Questions:** Review the [Frequently Asked Questions](docs/FAQ.md) for quick answers.
