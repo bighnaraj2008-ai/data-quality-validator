@@ -1,18 +1,19 @@
 # Data Quality Validator
 
 [![CI Build](https://github.com/bighnaraj2008-ai/data-quality-validator/actions/workflows/validator_ci.yml/badge.svg)](https://github.com/bighnaraj2008-ai/data-quality-validator/actions)
-[![Coverage](https://img.shields.io/badge/coverage-98%25-brightgreen.svg)](#)
-[![Python 3.9+](https://img.shields.io/badge/python-3.9%20%7C%203.10%20%7C%203.11-blue.svg)](https://www.python.org/)
+[![Test Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen.svg)](#)
+[![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Code Style: Flake8](https://img.shields.io/badge/code%20style-flake8-green.svg)](https://flake8.pycqa.org/)
+[![Day 3 Documentation](https://img.shields.io/badge/docs-Day%203%20Sprint-blueviolet.svg)](#)
 
 A high-performance, modular data validation and quality assurance framework designed for modern data engineering pipelines.
 
 ## Overview
 
-`data-quality-validator` provides declarative, automated data quality testing for data ingestion and ETL/ELT pipelines. It offers dual-mode validation:
+`data-quality-validator` delivers declarative, automated data quality testing for data ingestion and ETL/ELT pipelines. It provides dual-mode validation:
 - **In-Memory Engine**: High-throughput validation across Pandas / PyArrow dataframes.
-- **In-Database SQL Engine**: Pure SQL check templates for direct execution in data warehouses (Snowflake, BigQuery, PostgreSQL, DuckDB).
+- **In-Database SQL Engine**: Pure SQL check templates for direct execution in data warehouses (Snowflake, BigQuery, PostgreSQL, DuckDB, SQLite).
 
 ### Key Features
 - **Null Value Inspection**: Quantifies missing data against configurable threshold ratios.
@@ -21,150 +22,3 @@ A high-performance, modular data validation and quality assurance framework desi
 - **Range & Boundary Verification**: Validates numerical bounds and statistical bounds.
 - **Declarative YAML Rules**: Flexible configuration with environment variable override support.
 - **Audit Reports**: Produces machine-readable JSON metrics and markdown summaries.
-
----
-
-## Modular Architecture
-
-The framework is decoupled into distinct subsystems for maintainability and scalability:
-
-```text
-data-quality-validator/
-├── src/validator/             # Core Python validation engine
-│   ├── core.py                # Pipeline runner & error-isolated orchestrator
-│   ├── null_checker.py        # Null distribution & non-nullable assertions
-│   ├── duplicate_checker.py   # Row & PK uniqueness validator
-│   ├── drift_detector.py      # Schema drift & column type checking
-│   └── range_checker.py       # Numerical range boundary check
-├── src/config/                # Declarative configuration subsystem
-│   ├── loader.py              # YAML parser with DQ_ environment overrides
-│   └── validator_config.yaml  # Default rules & thresholds template
-├── sql/checks/                # Pure SQL verification templates
-│   ├── null_distribution.sql  # Database-native null checks
-│   ├── duplicate_keys.sql     # Key collision queries
-│   ├── schema_drift.sql       # Information schema drift views
-│   └── row_count_anomaly.sql  # Row volume anomaly detection
-└── scripts/                   # CLI execution & telemetry reporting
-    ├── run_validation.py      # CLI execution entrypoint
-    └── generate_report.py     # JSON and Markdown telemetry exporter
-```
-
-Detailed architectural diagrams and pipeline execution flow are documented in [`docs/ARCHITECTURE_REFACTOR.md`](docs/ARCHITECTURE_REFACTOR.md).
-
----
-
-## Quickstart
-
-### 1. Installation
-
-Clone the repository and set up a Python virtual environment:
-
-```bash
-git clone https://github.com/bighnaraj2008-ai/data-quality-validator.git
-cd data-quality-validator
-
-python -m venv venv
-# Linux / macOS
-source venv/bin/activate
-# Windows PowerShell
-.\venv\Scripts\Activate.ps1
-
-pip install -e .
-```
-
-### 2. Running Data Validation
-
-Execute the pipeline against a CSV or sample dataset:
-
-```bash
-# Run validation via the CLI wrapper
-python scripts/run_validation.py --data sample_data.csv --config src/config/validator_config.yaml
-
-# Generate an inspection report
-python scripts/generate_report.py --input sample_data.csv --output report.json --format json
-```
-
-### 3. Running Unit Tests
-
-Execute the automated test suite:
-
-```bash
-pytest tests/ -v
-```
-
----
-
-
----
-
-## Testing & Test Automation
-
-The repository includes a comprehensive, multi-layer test suite covering core components, edge cases, integration scenarios, and performance profiling.
-
-### Running Tests Locally
-
-```bash
-# Run entire test suite
-pytest tests/ -v
-
-# Run edge-case tests specifically
-pytest tests/edge_cases/ -v
-
-# Run integration tests with mock database
-pytest tests/integration/ -v
-
-# Execute automated test runner with fixture verification
-bash scripts/run_unit_tests.sh
-```
-
-For complete architectural details and test coverage matrices, see [`docs/TEST_COVERAGE.md`](docs/TEST_COVERAGE.md) and [`docs/FIXTURE_GUIDE.md`](docs/FIXTURE_GUIDE.md), and [`docs/BENCHMARK_TEMPLATE.md`](docs/BENCHMARK_TEMPLATE.md).
-
-## Troubleshooting & FAQ
-
-#### Q: How do I run only the edge-case tests without performance benchmarks?
-**A:** Use pytest path filtering: `pytest tests/edge_cases/ -v`.
-
-#### Q: How can I debug a quality assertion failure in custom tests?
-**A:** Import `assert_check_status` and `calculate_quality_score` from `tests.harness.assertions` for descriptive diagnostic output.
-
-#### Q: How do I override default thresholds without modifying the YAML configuration?
-**A:** Set environment variables prefixed with `DQ_`. For instance, to increase the allowable null threshold for amounts:
-```bash
-export DQ_CHECKS__NULL_CHECK__THRESHOLDS__AMOUNT=0.10
-```
-
-#### Q: The schema drift check flags columns that are dynamically added upstream. How do I ignore them?
-**A:** In `src/config/validator_config.yaml`, set `checks.schema_drift.allow_unexpected_columns: true` to prevent unmapped columns from failing the pipeline.
-
-#### Q: How can I debug pure SQL checks locally without connecting to a remote warehouse?
-**A:** Use DuckDB or SQLite with the SQL templates under `sql/checks/`. For query syntax rules, refer to [`docs/SQL_CHECKS_GUIDE.md`](docs/SQL_CHECKS_GUIDE.md).
-
----
-
-## Project Status & Roadmap
-
-- **Day 1 Milestone Completed** :white_check_mark:
-  - Architecture decoupled into isolated modular checkers (`null`, `duplicate`, `drift`, `range`).
-  - YAML configuration loader with dynamic environment variable overrides implemented.
-  - Pure SQL check template library initialized.
-  - Comprehensive unit test suite with 100% pass rate.
-  - Continuous integration workflows configured with SQLFluff and Pytest.
-- **Day 2 Milestone Completed** :white_check_mark:
-  - Standardized fixture catalog (`clean_dataset.csv`, `drifted_dataset.csv`, `null_anomaly.json`, `duplicate_keys.csv`).
-  - Modular edge-case test suites for type mismatch, empty payload, and threshold breaches.
-  - End-to-end integration and pure SQL check verification test suites.
-  - Performance benchmarks (> 10,000 rows/s) and memory consumption profiling (< 60MB).
-  - Automated test runners and documentation guides (`TEST_COVERAGE.md`, `EDGE_CASES.md`, `FIXTURE_GUIDE.md`, `BENCHMARK_TEMPLATE.md`).
-- **Upcoming Day 3 Milestone**:
-  - Cloud warehouse integration (Snowflake, BigQuery adapters).
-  - Parallel asynchronous execution engine for multi-table validations.
-
-
-## Contributing
-
-
-For details on testing conventions and PR test standards, refer to [`CONTRIBUTING.md`](CONTRIBUTING.md).
-
-## License
-
-This project is licensed under the MIT License - see the [`LICENSE`](LICENSE) file for details.
