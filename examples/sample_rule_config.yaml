@@ -1,0 +1,56 @@
+# Sample YAML Validation Rules Configuration
+version: "1.0"
+environment: "production"
+
+database:
+  backend: "sqlite"
+  path: "dq_audit.db"
+  echo: false
+
+thresholds:
+  default_null_threshold: 0.05
+  strict_schema: true
+  allow_duplicates: false
+
+rules:
+  null_checks:
+    non_nullable:
+      - id
+      - email
+    column_thresholds:
+      phone_number: 0.20
+      address: 0.15
+
+  uniqueness:
+    primary_key:
+      - id
+    allow_duplicates: false
+
+  ranges:
+    age:
+      min: 0
+      max: 120
+    income:
+      min: 0.0
+      max: 1000000.0
+
+  schema_drift:
+    allow_unexpected_columns: false
+
+severity:
+  null_checks: "error"
+  uniqueness: "error"
+  ranges: "warning"
+  schema_drift: "warning"
+
+alerting:
+  enabled: true
+  on_status:
+    - "warn"
+    - "fail"
+  webhooks:
+    - name: "slack-data-ops"
+      url: "${DQ_SLACK_WEBHOOK_URL}"
+      method: "POST"
+      payload_format: "json"
+      timeout_seconds: 10
