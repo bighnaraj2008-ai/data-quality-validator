@@ -279,3 +279,5 @@ We welcome community contributions, custom check modules, and dialect adapters!
 | [SQL Check Catalog](docs/SQL_CHECK_CATALOG.md) | [Incident Playbook](docs/INCIDENT_PLAYBOOK.md) | [Fixture Guide](docs/FIXTURE_GUIDE.md) | [Data Governance](docs/DATA_GOVERNANCE.md) |
 | [SQL Checks Guide](docs/SQL_CHECKS_GUIDE.md) | [Diagnostics Guide](docs/DIAGNOSTICS.md) | [Benchmark Template](docs/BENCHMARK_TEMPLATE.md) | [Engineering Glossary](docs/GLOSSARY.md) |
 | [Performance Tuning](docs/PERFORMANCE_TUNING.md) | [Schema Migration](docs/MIGRATION_V2.md) | [Throughput Report](docs/BENCHMARK_REPORT.md) | [Frequently Asked Questions](docs/FAQ.md) |
+
+<!-- Project 2 (data-quality-validator) Day 3 Advanced Documentation Sprint Finalized -->
