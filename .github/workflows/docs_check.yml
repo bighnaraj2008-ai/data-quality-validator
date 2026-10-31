@@ -1,0 +1,36 @@
+name: Documentation & Markdown Integrity Gate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  doc-validation:
+    name: Markdown Link & Syntax Verification
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12"]
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install Dependencies
+        run: |
+          pip install pyyaml
+
+      - name: Validate Markdown Links & Encodings
+        run: |
+          python scripts/validate_docs.py
+
+      - name: Verify Documentation YAML Examples
+        run: |
+          python -c "import yaml; yaml.safe_load(open('examples/sample_rule_config.yaml'))"
