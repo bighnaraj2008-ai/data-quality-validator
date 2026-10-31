@@ -196,3 +196,43 @@ class RangeChecker:
             CheckResult indicating boundary compliance.
         """
 ```
+
+---
+
+## 3. Configuration Subsystem (`src/config/loader.py`)
+
+### `ConfigLoader`
+
+Parses declarative YAML configurations and applies runtime environment variable overrides.
+
+```python
+class ConfigLoader:
+    @staticmethod
+    def load(config_path: Optional[str] = None) -> dict[str, Any]:
+        """
+        Loads validation configuration from YAML file and merges environment overrides.
+
+        Args:
+            config_path: Optional path to YAML configuration file. If omitted,
+                         loads 'src/config/validator_config.yaml'.
+
+        Returns:
+            Validated configuration dictionary.
+
+        Raises:
+            FileNotFoundError: If the specified config file does not exist.
+            ValueError: If threshold or parameter values are outside valid ranges.
+        """
+
+    @staticmethod
+    def _apply_env_overrides(config: dict[str, Any]) -> dict[str, Any]:
+        """
+        Inspects os.environ for 'DQ_*' variables and merges them into the config tree.
+        """
+```
+
+### Exception Hierarchy
+
+- `DataQualityError`: Base class for validator exceptions.
+- `ConfigurationError`: Raised when YAML structure or parameter bounds are invalid.
+- `CheckExecutionError`: Raised when a check cannot execute due to missing columns or unreadable data.
