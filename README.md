@@ -5,6 +5,7 @@
 [![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Code Style: Flake8](https://img.shields.io/badge/code%20style-flake8-green.svg)](https://flake8.pycqa.org/)
+[![Release v1.0.0](https://img.shields.io/badge/release-v1.0.0--stable-green.svg)](https://github.com/bighnaraj2008-ai/data-quality-validator/releases)
 [![Day 3 Documentation](https://img.shields.io/badge/docs-Day%203%20Sprint-blueviolet.svg)](#)
 
 A high-performance, modular data validation and quality assurance framework designed for modern data engineering pipelines.
