@@ -22,3 +22,70 @@ A high-performance, modular data validation and quality assurance framework desi
 - **Range & Boundary Verification**: Validates numerical bounds and statistical bounds.
 - **Declarative YAML Rules**: Flexible configuration with environment variable override support.
 - **Audit Reports**: Produces machine-readable JSON metrics and markdown summaries.
+
+---
+
+## Architecture & Data Flow
+
+Datasets flow from source storage through Python validators and pure SQL check engines to final reporting dashboards.
+
+### Component Diagram
+
+```mermaid
+graph TD
+    subgraph Source_Storage ["Source Storage"]
+        S1[("CSV / Parquet Files")]
+        S2[("Data Warehouse<br/>Snowflake · BigQuery ·<br/>PostgreSQL · DuckDB")]
+        S3[("API / Streaming Ingestion")]
+    end
+
+    subgraph Ingestion ["Ingestion Layer"]
+        I1[CSV Reader<br/>pandas.read_csv]
+        I2[SQLAlchemy Connector]
+    end
+
+    subgraph Python_Validators ["Python Validation Engine<br/>src/validator/"]
+        P1[DataValidator Core<br/>core.py]
+        P2[NullChecker<br/>null distribution]
+        P3[DuplicateChecker<br/>row & key uniqueness]
+        P4[DriftDetector<br/>schema drift]
+        P5[RangeChecker<br/>numerical boundaries]
+    end
+
+    subgraph SQL_Check_Engine ["Pure SQL Check Engine<br/>sql/checks/"]
+        Q1[null_distribution.sql]
+        Q2[duplicate_keys.sql]
+        Q3[row_count_anomaly.sql]
+        Q4[schema_drift.sql]
+    end
+
+    subgraph Reporting ["Reporting & Dashboards"]
+        R1[JSON Telemetry Report]
+        R2[Markdown Audit Summary]
+        R3[Console Dashboard]
+        R4[Alert Webhooks<br/>Slack · Teams]
+    end
+
+    S1 --> I1
+    S2 --> I2
+    S3 --> I1
+    I1 --> P1
+    I2 --> Q1
+    I2 --> Q2
+    I2 --> Q3
+    I2 --> Q4
+    P1 --> P2
+    P1 --> P3
+    P1 --> P4
+    P1 --> P5
+    P1 --> R1
+    P1 --> R2
+    P1 --> R3
+    Q1 --> R1
+    Q2 --> R1
+    Q3 --> R1
+    Q4 --> R1
+    R1 --> R4
+```
+
+For full sequence diagrams and detailed architectural notes, see [`docs/ARCHITECTURE.mmd`](docs/ARCHITECTURE.mmd) and [`docs/ARCHITECTURE_REFACTOR.md`](docs/ARCHITECTURE_REFACTOR.md).
