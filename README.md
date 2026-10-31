@@ -117,3 +117,18 @@ rules:
 ```
 
 For full syntax reference, per-column overrides, severity mapping, and alert webhook setup, see the [Rule Authoring Guide](docs/RULE_AUTHORING.md).
+
+---
+
+## Pure SQL Check Catalog
+
+When validating datasets exceeding RAM limits or residing directly in cloud data warehouses, `data-quality-validator` provides parameter-bound SQL check templates under `sql/checks/`.
+
+| Check Name | SQL Template | Detects |
+|:-----------|:-------------|:--------|
+| Null Distribution | `null_distribution.sql` | Missing value ratios exceeding thresholds |
+| Primary Key Uniqueness | `duplicate_keys.sql` | Duplicate primary keys and composite key collisions |
+| Row Count Anomaly | `row_count_anomaly.sql` | Record count deviations outside expected min/max |
+| Schema Drift | `schema_drift.sql` | Missing columns, unmapped additions, and type mismatches |
+
+For query templates, dialect compatibility matrices (Postgres, SQLite, Snowflake, BigQuery, DuckDB), and execution examples, see the [Pure SQL Check Catalog](docs/SQL_CHECK_CATALOG.md) and [SQL Checks Guide](docs/SQL_CHECKS_GUIDE.md).
