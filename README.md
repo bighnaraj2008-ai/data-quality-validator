@@ -135,6 +135,22 @@ For query templates, dialect compatibility matrices (Postgres, SQLite, Snowflake
 
 ---
 
+## Documentation Directory & Guides
+
+| Document | Topic | Description |
+|:---------|:------|:------------|
+| [Rule Authoring Guide](docs/RULE_AUTHORING.md) | Configuration | Declarative YAML syntax, threshold parameters, alert webhooks |
+| [Pure SQL Check Catalog](docs/SQL_CHECK_CATALOG.md) | Database Checks | SQL check templates across Postgres, Snowflake, BigQuery, SQLite |
+| [System Architecture](docs/ARCHITECTURE.mmd) | Design | Sequence flows and component diagrams |
+| [API Reference](docs/API_REFERENCE.md) | Python API | Core classes, checkers, and config loader interfaces |
+| [Deployment Runbook](docs/DEPLOYMENT_GUIDE.md) | Operations | Containerization, Kubernetes CronJobs, Airflow DAGs |
+| [Diagnostics Playbook](docs/DIAGNOSTICS.md) | Troubleshooting | Isolating failed checks and SQL forensics queries |
+| [Security Hardening](docs/SECURITY_HARDENING.md) | Security | Credential protection and least-privilege roles |
+| [Schema Migration Guide](docs/MIGRATION_V2.md) | Upgrades | Upgrading from rule schema v1.0 to v2.0 |
+| [Contributing Guide](docs/CONTRIBUTORS_GUIDE.md) | Development | Submitting custom checkers and pull requests |
+
+---
+
 ## Quickstart Guide
 
 ### 1. Installation
