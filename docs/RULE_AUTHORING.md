@@ -197,3 +197,87 @@ python scripts/run_validation.py --data sample_data.csv --config src/config/vali
 > **Security Note:** Never commit secrets (credentials, webhook URLs containing
 > tokens) to `validator_config.yaml`. Inject them through environment variables
 > or a secrets manager instead.
+
+---
+
+## 5. Alert Webhooks
+
+The `alerting` section configures outbound notifications when a validation run
+emits `WARN` or `FAIL`.
+
+```yaml
+alerting:
+  enabled: true
+  on_status: [warn, fail]      # statuses that trigger an alert
+  webhooks:
+    - name: "slack-dq-alerts"
+      url: "${DQ_SLACK_WEBHOOK_URL}"   # injected via environment
+      method: "POST"
+      payload_format: "json"
+      timeout_seconds: 10
+    - name: "teams-dq-channel"
+      url: "${DQ_TEAMS_WEBHOOK_URL}"
+      method: "POST"
+      payload_format: "json"
+```
+
+### Webhook Payload
+
+Each alert POSTs a JSON body:
+
+```json
+{
+  "event": "validation_failed",
+  "environment": "production",
+  "dataset_path": "s3://bucket/sample_data.csv",
+  "overall_status": "FAIL",
+  "checks_run": 4,
+  "passed": 2,
+  "failed": 1,
+  "warnings": 1,
+  "duration_ms": 142.3,
+  "failed_checks": [
+    {
+      "name": "null_values",
+      "status": "FAIL",
+      "message": "Non-nullable column 'email' has 3 nulls (6.0%)"
+    }
+  ],
+  "timestamp": "2026-10-31T12:00:00Z"
+}
+```
+
+Placeholders like `${DQ_SLACK_WEBHOOK_URL}` are resolved from the environment at
+runtime. Missing environment variables emit a warning and skip the webhook
+rather than halting validation.
+
+---
+
+## 6. Testing & Linting Rules
+
+Always test newly authored YAML rules against fixture data before deploying:
+
+```bash
+python scripts/run_validation.py \
+    --data tests/fixtures/clean_dataset.csv \
+    --config my_custom_rules.yaml
+```
+
+Run rule linting to confirm valid YAML syntax:
+
+```bash
+python -c "import yaml; yaml.safe_load(open('my_custom_rules.yaml'))"
+```
+
+---
+
+## 7. Best Practices
+
+1. **Keep rules declarative:** Avoid putting procedural or transformation logic
+   in rule definitions.
+2. **Use non_nullable conservatively:** Only mark true primary keys and essential
+   foreign keys as `non_nullable` to avoid spurious alerts.
+3. **Set realistic boundaries:** Derive min/max values for `ranges` from
+   historical domain distributions.
+4. **Isolate environments:** Use `environment: development` rules with lenient
+   thresholds for local development.
