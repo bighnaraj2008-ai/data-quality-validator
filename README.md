@@ -89,3 +89,31 @@ graph TD
 ```
 
 For full sequence diagrams and detailed architectural notes, see [`docs/ARCHITECTURE.mmd`](docs/ARCHITECTURE.mmd) and [`docs/ARCHITECTURE_REFACTOR.md`](docs/ARCHITECTURE_REFACTOR.md).
+
+---
+
+## Declarative Rule Authoring
+
+Validation rules are authored in clean, declarative YAML format. Rules configure check thresholds, non-nullable assertions, uniqueness keys, and webhook targets.
+
+```yaml
+version: "1.0"
+environment: "production"
+
+thresholds:
+  default_null_threshold: 0.05
+  strict_schema: true
+  allow_duplicates: false
+
+rules:
+  null_checks:
+    non_nullable: [id, email]
+    column_thresholds:
+      phone_number: 0.20
+  ranges:
+    age:
+      min: 0
+      max: 120
+```
+
+For full syntax reference, per-column overrides, severity mapping, and alert webhook setup, see the [Rule Authoring Guide](docs/RULE_AUTHORING.md).
