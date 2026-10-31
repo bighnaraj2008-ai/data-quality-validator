@@ -21,7 +21,12 @@ for f in "tests/fixtures/clean_dataset.csv" "tests/fixtures/drifted_dataset.csv"
 done
 echo "Test fixtures verified"
 
-# 2. Create temporary sample CSV
+# 2. Validate documentation integrity
+echo "Validating documentation links and syntax..."
+"$PYTHON_BIN" scripts/validate_docs.py
+echo "Documentation links verified successfully"
+
+# 3. Create temporary sample CSV
 cat << 'EOF' > "$TEMP_DATA"
 id,email,age,income
 1,alice@example.com,28,65000.00
@@ -33,11 +38,11 @@ EOF
 
 echo "Created synthetic dataset: $TEMP_DATA"
 
-# 3. Execute CLI validation runner
+# 4. Execute CLI validation runner
 "$PYTHON_BIN" scripts/run_validation.py --data "$TEMP_DATA" --config src/config/validator_config.yaml
 echo "Validation pipeline runner passed successfully"
 
-# 4. Generate JSON report
+# 5. Generate JSON report
 "$PYTHON_BIN" scripts/generate_report.py --input "$TEMP_DATA" --output "$TEMP_REPORT" --format json
 if [[ -f "$TEMP_REPORT" ]]; then
     echo "Telemetry report generated successfully at $TEMP_REPORT"
@@ -46,7 +51,7 @@ else
     exit 1
 fi
 
-# 5. Clean up temporary files
+# 6. Clean up temporary files
 rm -f "$TEMP_DATA" "$TEMP_REPORT"
 echo "Temporary test artifacts cleaned up"
 
