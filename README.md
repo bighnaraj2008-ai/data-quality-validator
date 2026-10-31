@@ -167,3 +167,30 @@ python scripts/generate_report.py --input sample_data.csv --output reports/valid
 ```bash
 pytest tests/ -v
 ```
+
+---
+
+## Python API Reference
+
+Embed `data-quality-validator` directly into your data pipelines and ETL scripts:
+
+```python
+import pandas as pd
+from src.validator.core import DataValidator
+from src.config.loader import ConfigLoader
+
+# Load declarative rules with environment overrides
+config = ConfigLoader.load("src/config/validator_config.yaml")
+
+# Initialize orchestrator
+validator = DataValidator(config=config)
+
+# Execute checks
+df = pd.read_csv("sample_data.csv")
+report = validator.validate(df, dataset_name="orders_landing")
+
+print(f"Status: {report.overall_status.value}")
+print(f"Passed: {len(report.passed_checks)} | Failed: {len(report.failed_checks)}")
+```
+
+For complete class hierarchies, method signatures, and exceptions, see the [Python API Reference](docs/API_REFERENCE.md).
