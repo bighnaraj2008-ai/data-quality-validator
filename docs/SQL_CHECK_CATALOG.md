@@ -97,3 +97,70 @@ ORDER BY null_fraction DESC, column_name;
 **Warehouse Execution Notes:**
 - On PostgreSQL and Snowflake, `information_schema.columns` provides instant schema inspection.
 - On SQLite, table column names can be discovered via `PRAGMA table_info()` prior to executing the aggregate count.
+
+---
+
+### 3.2 Uniqueness Constraints — `duplicate_keys.sql`
+
+**Purpose.** Identifies duplicate primary key or composite key collisions and
+surfaces offending keys with occurrence counts.
+
+**Dialects.** ANSI SQL, PostgreSQL, SQLite, Snowflake, BigQuery, DuckDB.
+
+**Parameters.** `:table_name`, `:pk_column`, `:sample_limit`.
+
+**Output.** One row per colliding key value with `occurrence_count > 1`, ordered
+by count descending, capped at `:sample_limit`.
+
+**Severity Mapping.** Any rows returned -> `FAIL`; empty result -> `PASS`.
+
+**Example Query.**
+
+```sql
+-- Bind: table_name='orders', pk_column='order_id', sample_limit=50
+SELECT
+    :pk_column AS primary_key_value,
+    COUNT(*) AS occurrence_count
+FROM :table_name
+GROUP BY :pk_column
+HAVING COUNT(*) > 1
+ORDER BY occurrence_count DESC
+LIMIT :sample_limit;
+```
+
+> **Composite Keys.** For composite keys, bind `:pk_column` as the
+> comma-separated key list, e.g. `order_id, line_number`.
+
+---
+
+### 3.3 Row Count Anomaly — `row_count_anomaly.sql`
+
+**Purpose.** Verifies dataset record volume falls within expected boundaries to
+detect empty tables, dropped partitions, or unexpected spikes.
+
+**Dialects.** ANSI SQL, PostgreSQL, SQLite, Snowflake, BigQuery, DuckDB.
+
+**Parameters.** `:table_name`, `:min_expected_rows`, `:max_expected_rows`.
+
+**Output.** Single row with `actual_row_count` and `volume_status`
+(`volume_too_low` / `volume_too_high` / `volume_normal`).
+
+**Severity Mapping.** `volume_too_low` / `volume_too_high` -> `FAIL`;
+`volume_normal` -> `PASS`.
+
+**Example Query.**
+
+```sql
+-- Bind: table_name='events', min_expected_rows=1000, max_expected_rows=1000000
+SELECT
+    :table_name AS table_name,
+    COUNT(*) AS actual_row_count,
+    :min_expected_rows AS min_expected_rows,
+    :max_expected_rows AS max_expected_rows,
+    CASE
+        WHEN COUNT(*) < :min_expected_rows THEN 'volume_too_low'
+        WHEN :max_expected_rows IS NOT NULL AND COUNT(*) > :max_expected_rows THEN 'volume_too_high'
+        ELSE 'volume_normal'
+    END AS volume_status
+FROM :table_name;
+```
