@@ -203,3 +203,13 @@ For complete class hierarchies, method signatures, and exceptions, see the [Pyth
 - **Debugging Failures:** Consult the [Diagnostics Playbook](docs/DIAGNOSTICS.md) for isolating offending records and SQL forensics queries.
 - **Incident Response:** See the [Incident Playbook](docs/INCIDENT_PLAYBOOK.md) for severity classifications and circuit breaker protocols.
 - **Common Questions:** Review the [Frequently Asked Questions](docs/FAQ.md) for quick answers.
+
+---
+
+## Contributing
+
+We welcome community contributions, custom check modules, and dialect adapters!
+
+- Review our [Contribution Guidelines](docs/CONTRIBUTORS_GUIDE.md) and [`CONTRIBUTING.md`](CONTRIBUTING.md).
+- Follow our coding standards (Flake8 linting, type annotations, unit tests).
+- Read the [Test Coverage Guide](docs/TEST_COVERAGE.md) and [Fixture Authoring Guide](docs/FIXTURE_GUIDE.md).
