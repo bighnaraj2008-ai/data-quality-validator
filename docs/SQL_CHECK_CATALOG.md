@@ -164,3 +164,87 @@ SELECT
     END AS volume_status
 FROM :table_name;
 ```
+
+---
+
+### 3.4 Schema Drift Detection — `schema_drift.sql`
+
+**Purpose.** Compares the column layout and data types of a target table against
+a reference baseline schema or historical catalog table to detect added, missing,
+or altered column types.
+
+**Dialects.** ANSI SQL with `information_schema.columns`, PostgreSQL, Snowflake.
+
+**Parameters.** `:baseline_schema`, `:baseline_table`, `:target_schema`, `:target_table`.
+
+**Output.** One row per column discrepancy with `drift_type`
+(`column_missing` / `unexpected_column_added` / `data_type_mismatch`).
+
+**Severity Mapping.**
+- `column_missing`: `FAIL`
+- `data_type_mismatch`: `FAIL`
+- `unexpected_column_added`: `WARN` (or `FAIL` in strict mode)
+
+**Example Query.**
+
+```sql
+-- Bind: baseline_schema='ref', baseline_table='customers_v1', target_schema='public', target_table='customers'
+WITH baseline AS (
+    SELECT column_name, data_type, ordinal_position
+    FROM information_schema.columns
+    WHERE table_schema = :baseline_schema AND table_name = :baseline_table
+),
+target AS (
+    SELECT column_name, data_type, ordinal_position
+    FROM information_schema.columns
+    WHERE table_schema = :target_schema AND table_name = :target_table
+)
+SELECT
+    COALESCE(b.column_name, t.column_name) AS column_name,
+    b.data_type AS baseline_type,
+    t.data_type AS target_type,
+    CASE
+        WHEN t.column_name IS NULL THEN 'column_missing'
+        WHEN b.column_name IS NULL THEN 'unexpected_column_added'
+        WHEN b.data_type != t.data_type THEN 'data_type_mismatch'
+        ELSE 'matching'
+    END AS drift_type
+FROM baseline b
+FULL OUTER JOIN target t ON b.column_name = t.column_name
+WHERE b.column_name IS NULL
+   OR t.column_name IS NULL
+   OR b.data_type != t.data_type;
+```
+
+---
+
+## 4. Dialect Differences & Compatibility
+
+| Feature | PostgreSQL | SQLite | Snowflake | BigQuery | DuckDB |
+|:--------|:----------:|:------:|:---------:|:--------:|:------:|
+| `information_schema` | Yes | No (`PRAGMA`) | Yes | Yes | Yes |
+| `ROUND(val, n)` | Yes | Yes | Yes | Yes | Yes |
+| `NULLIF()` | Yes | Yes | Yes | Yes | Yes |
+| Bind syntax | `:param` / `$1` | `:param` / `?` | `:param` / `?` | `@param` | `:param` / `?` |
+
+---
+
+## 5. Executing SQL Checks Programmatically
+
+To execute pure SQL check templates from Python via SQLAlchemy:
+
+```python
+from sqlalchemy import create_engine, text
+
+engine = create_engine("sqlite:///dq_audit.db")
+
+with open("sql/checks/duplicate_keys.sql", "r") as f:
+    query_template = f.read()
+
+# Replace or bind parameters
+query = query_template.replace(":table_name", "orders").replace(":pk_column", "order_id").replace(":sample_limit", "100")
+
+with engine.connect() as conn:
+    results = conn.execute(text(query)).fetchall()
+    print(f"Duplicate collisions found: {len(results)}")
+```
