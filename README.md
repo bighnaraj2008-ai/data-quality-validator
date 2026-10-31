@@ -147,6 +147,7 @@ For query templates, dialect compatibility matrices (Postgres, SQLite, Snowflake
 | [Diagnostics Playbook](docs/DIAGNOSTICS.md) | Troubleshooting | Isolating failed checks and SQL forensics queries |
 | [Security Hardening](docs/SECURITY_HARDENING.md) | Security | Credential protection and least-privilege roles |
 | [Schema Migration Guide](docs/MIGRATION_V2.md) | Upgrades | Upgrading from rule schema v1.0 to v2.0 |
+| [Data Governance Guide](docs/DATA_GOVERNANCE.md) | Compliance | Data lineage, audit trails, and privacy compliance |
 | [Contributing Guide](docs/CONTRIBUTORS_GUIDE.md) | Development | Submitting custom checkers and pull requests |
 
 ---
