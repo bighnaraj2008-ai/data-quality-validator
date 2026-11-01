@@ -7,7 +7,7 @@ name = "data-quality-validator"
 version = "0.1.0"
 description = "A modular data quality validation engine with SQL checks and schema drift detection"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.9"
 license = {text = "MIT"}
 authors = [
     {name = "bighnaraj2008-ai", email = "236182883+bighnaraj2008-ai@users.noreply.github.com"}
@@ -64,3 +64,12 @@ max-line-length = 120
 extend-ignore = "E203, W503"
 exclude = "venv,.venv,__pycache__,.pytest_cache,build,dist,.git,.eggs"
 per-file-ignores = "tests/*: E501"
+
+[tool.coverage.run]
+source = ["src/validator", "src/config"]
+omit = ["tests/*", "*/__pycache__/*"]
+
+[tool.coverage.report]
+fail_under = 80
+show_missing = true
+skip_covered = false
