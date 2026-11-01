@@ -290,7 +290,7 @@ We welcome community contributions, custom check modules, and dialect adapters!
 
 ## License & Security
 
-- **License:** Distributed under the MIT License. See [`LICENSE`](LICENSE) for terms.
+- **License:** Distributed under the MIT License (verified in [`LICENSE`](LICENSE)); all third-party dependencies remain permissive and audited.
 - **Security:** Review the [Database Security Hardening Guide](docs/SECURITY_HARDENING.md), [Security & Disclosure Policy](docs/SECURITY_POLICY.md), and [`SECURITY.md`](SECURITY.md) for credential isolation and vulnerability reporting.
 
 ---
