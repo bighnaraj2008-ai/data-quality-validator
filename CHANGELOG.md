@@ -5,6 +5,21 @@ All notable changes to the `data-quality-validator` project will be documented i
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.0] - 2026-11-01
+
+### Added
+- Multi-version CI validation matrix workflow (`.github/workflows/ci_validation.yml`) testing Python 3.9 through 3.12 with Flake8, Black, SQLFluff, and Pytest coverage artifacts.
+- Dedicated SQL static analysis workflow (`.github/workflows/sql_lint.yml`) and strict `.sqlfluff` configuration.
+- Release packaging and PyPI / GitHub Release workflow (`.github/workflows/release_package.yml`).
+- Security vulnerability scanning (`.github/workflows/security_scan.yml`), CodeQL analysis (`.github/workflows/code_ql.yml`), and dependency validation (`.github/workflows/dependency_check.yml`) workflows.
+- Local developer lint and formatting automation scripts (`scripts/run_linter.sh`, `scripts/check_formatting.sh`, `scripts/format_code.sh`, `scripts/validate_workflows.sh`).
+- CI/CD architecture, linter standards, and troubleshooting guides (`docs/CI_CD_PIPELINE.md`, `docs/LINTER_STANDARDS.md`, `docs/TROUBLESHOOTING_CI.md`).
+
+### Changed
+- Standardized all Python modules, test suites, and automation scripts under `black` (`line-length = 120`) and `flake8`.
+- Formatted all pure SQL check templates under `sql/checks/` to comply cleanly with ANSI SQLFluff rules.
+- Updated `pyproject.toml` to support `requires-python >= 3.9` alongside pytest coverage thresholds.
+
 ## [0.4.0] - 2026-10-31
 
 ### Added
