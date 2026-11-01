@@ -67,3 +67,80 @@ Run locally:
 ```bash
 sqlfluff lint sql/checks/ --dialect ansi
 ```
+
+## Build Matrix Configuration
+
+`ci_validation.yml` uses a `fail-fast: false` matrix:
+
+```yaml
+python-version: ["3.9", "3.10", "3.11", "3.12"]
+runs-on: ubuntu-latest
+```
+
+Each matrix job:
+
+1. Checks out the repository.
+2. Sets up Python (with pip caching).
+3. Installs the package in editable mode with dev extras (`pip install -e ".[dev]"`), plus `flake8`, `black`, `sqlfluff`, `pytest`, `pytest-cov`.
+4. Lints Python with flake8.
+5. Checks Python formatting with black (`--check`).
+6. Lints SQL check templates with sqlfluff.
+7. Runs the pytest suite (JUnit XML + coverage).
+8. Uploads test results and coverage as artifacts.
+
+`pyproject.toml` declares `requires-python = ">=3.9"` to match the matrix.
+
+## Release Process
+
+1. Bump the version (e.g. in `pyproject.toml`) and update `CHANGELOG.md`.
+2. Create and push an annotated tag:
+
+```bash
+git tag v0.1.0
+git push origin v0.1.0
+```
+
+3. `release_package.yml` runs:
+   - Pre-release gate: flake8, black --check, sqlfluff, pytest.
+   - `python -m build` → `dist/*.whl` + `dist/*.tar.gz`.
+   - A validation bundle (`validation-bundle.zip`) containing `sql/checks/`, `README.md`, `LICENSE` and a test report.
+   - Uploads `dist/` and the bundle as workflow artifacts.
+   - Publishes to PyPI only when the `PYPI_API_TOKEN` repository secret is set (guarded so PRs/forks cannot deploy).
+   - Creates a GitHub Release attaching the wheels/sdist and the validation bundle.
+
+## Local Developer Workflow
+
+```bash
+# 1. Create / activate a virtual environment
+python -m venv .venv
+source .venv/bin/activate   # Linux/macOS
+# .venv\Scripts\activate    # Windows
+
+# 2. Install the package and dev dependencies
+pip install -e ".[dev]"
+pip install flake8 black sqlfluff pytest
+
+# 3. Run the full local lint + test check
+./scripts/run_linter.sh
+pytest tests/ -v
+
+# 4. (Optional) Preview formatting changes without enforcing
+./scripts/check_formatting.sh
+```
+
+## Repository Hygiene
+
+The following must never be committed or tracked (enforced by `.gitignore`):
+
+- Build artifacts: `build/`, `dist/`, `*.egg-info/`, `*.egg`, `sdist/`, `wheels/`
+- Virtual environments: `venv/`, `.venv/`, `env/`
+- Cache files: `__pycache__/`, `*.pyc`, `.pytest_cache/`, `.coverage`, `htmlcov/`
+- Local logs: `*.log`, `reports/`, `output/`
+- Editor / IDE configs: `.vscode/`, `.idea/`, `.antigravity/`, `.cursor/`, `.claude/`
+
+## CI Artifacts
+
+- `test-results-py<version>` — JUnit XML per Python version.
+- `coverage-py<version>` — coverage XML per Python version.
+- `release-dist` — wheel + sdist from `python -m build`.
+- `validation-bundle.zip` — SQL check templates + docs + test report for release auditing.
