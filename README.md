@@ -192,6 +192,25 @@ pytest tests/ -v
 
 ---
 
+## Code Style, Linting & CI Automation
+
+All Python and SQL changes are gated by `flake8`, `black`, and `sqlfluff`:
+
+```bash
+# Run all Python and SQL static analysis checks
+./scripts/run_linter.sh
+
+# Preview formatting changes without modifying files
+./scripts/check_formatting.sh
+
+# Auto-format Python modules and SQL check templates
+./scripts/format_code.sh
+```
+
+See the [CI/CD Pipeline Architecture](docs/CI_CD_PIPELINE.md) and [Linter Standards Guide](docs/LINTER_STANDARDS.md) for rule details.
+
+---
+
 ## Python API Reference
 
 Embed `data-quality-validator` directly into your data pipelines and ETL scripts:
