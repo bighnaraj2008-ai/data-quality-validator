@@ -9,4 +9,6 @@
 -- 4. row_count_anomaly.sql   : row count threshold and volume anomaly detection
 --
 -- Compatible with ANSI SQL, PostgreSQL, MySQL, and SQLite dialects.
+-- Each template uses example identifier values so it parses as valid ANSI SQL
+-- for linting; runtime parameter substitution is applied outside of sqlfluff.
 -- ============================================================================
