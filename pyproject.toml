@@ -37,3 +37,30 @@ where = ["src"]
 pythonpath = ["src"]
 testpaths = ["tests"]
 addopts = "-v --strict-markers"
+
+[tool.black]
+line-length = 120
+target-version = ["py39", "py310", "py311", "py312"]
+include = '\.pyi?$'
+exclude = '''/(
+    \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.nox
+  | \.venv
+  | venv
+  | \.svn
+  | _build
+  | buck-out
+  | build
+  | dist
+  | __pycache__
+)/
+'''
+
+[tool.flake8]
+max-line-length = 120
+extend-ignore = "E203, W503"
+exclude = "venv,.venv,__pycache__,.pytest_cache,build,dist,.git,.eggs"
+per-file-ignores = "tests/*: E501"
