@@ -1,4 +1,4 @@
-"""Metadata validation check for test suite components and templates."""
+"""Metadata validation check for test suite components, templates, and CI configs."""
 
 from pathlib import Path
 import yaml
@@ -40,3 +40,9 @@ def test_sql_checks_directory_completeness():
     for sql_file in sql_dir.glob("*.sql"):
         content = sql_file.read_text(encoding="utf-8")
         assert len(content.strip()) > 0
+
+
+def test_repository_metadata_and_linter_files_exist():
+    """Verify core packaging, linter, and governance files exist."""
+    for rel in [".sqlfluff", "pyproject.toml", ".gitignore", "LICENSE", "SECURITY.md"]:
+        assert (REPO_ROOT / rel).exists(), f"Missing repository metadata file: {rel}"
