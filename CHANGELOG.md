@@ -13,7 +13,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Release packaging and PyPI / GitHub Release workflow (`.github/workflows/release_package.yml`).
 - Security vulnerability scanning (`.github/workflows/security_scan.yml`), CodeQL analysis (`.github/workflows/code_ql.yml`), and dependency validation (`.github/workflows/dependency_check.yml`) workflows.
 - Local developer lint and formatting automation scripts (`scripts/run_linter.sh`, `scripts/check_formatting.sh`, `scripts/format_code.sh`, `scripts/validate_workflows.sh`).
-- CI/CD architecture, linter standards, and troubleshooting guides (`docs/CI_CD_PIPELINE.md`, `docs/LINTER_STANDARDS.md`, `docs/TROUBLESHOOTING_CI.md`).
+- CI/CD architecture, linter standards, and troubleshooting guides (`docs/CI_CD_PIPELINE.md`, `docs/LINTER_STANDARDS.md`, `docs/TROUBLESHOOTING_CI.md`, `docs/RELEASE_PROCESS.md`, `docs/SECURITY_POLICY.md`, `docs/FAQ_AUTOMATION.md`, `docs/BENCHMARK_CI.md`).
+- Automated style compliance, build matrix verification, and repository metadata tests (`tests/linter/`, `tests/ci/`, `tests/schema_metadata_tests.py`).
+- GitHub community health files (`.github/dependabot.yml`, issue templates, pull request template) and CI utility scripts (`scripts/bump_version.sh`, `scripts/clean_cache.py`, `scripts/health_check.py`).
 
 ### Changed
 - Standardized all Python modules, test suites, and automation scripts under `black` (`line-length = 120`) and `flake8`.
