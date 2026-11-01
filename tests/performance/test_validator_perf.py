@@ -10,11 +10,13 @@ from validator.core import BaselineSchema, CheckStatus, DataValidator
 def test_validator_throughput_benchmark():
     """Assert validator processes at least 10,000 rows/second on standard checks."""
     n_rows = 20000
-    df = pd.DataFrame({
-        "id": np.arange(n_rows),
-        "score": np.random.uniform(10.0, 90.0, size=n_rows),
-        "category": np.random.choice(["A", "B", "C"], size=n_rows),
-    })
+    df = pd.DataFrame(
+        {
+            "id": np.arange(n_rows),
+            "score": np.random.uniform(10.0, 90.0, size=n_rows),
+            "category": np.random.choice(["A", "B", "C"], size=n_rows),
+        }
+    )
 
     schema = BaselineSchema(
         columns={"id": "int64", "score": "float64", "category": "object"},

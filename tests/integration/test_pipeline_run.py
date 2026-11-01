@@ -11,8 +11,8 @@ REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from validator.core import BaselineSchema, CheckStatus, DataValidator
-from tests.harness.assertions import assert_check_status, assert_no_errors, calculate_quality_score
+from validator.core import BaselineSchema, CheckStatus, DataValidator  # noqa: E402
+from tests.harness.assertions import assert_check_status, assert_no_errors, calculate_quality_score  # noqa: E402
 
 FIXTURES_DIR = Path(__file__).resolve().parent.parent / "fixtures"
 

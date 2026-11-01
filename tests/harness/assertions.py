@@ -38,9 +38,9 @@ def assert_check_status(
     """Assert that a specific check rule produced the expected status with detailed context."""
     expected = CheckStatus(expected_status) if isinstance(expected_status, str) else expected_status
     match = next((r for r in report.results if r.name == check_name), None)
-    assert match is not None, (
-        f"Check rule '{check_name}' was not executed. Executed checks: {[r.name for r in report.results]}"
-    )
+    assert (
+        match is not None
+    ), f"Check rule '{check_name}' was not executed. Executed checks: {[r.name for r in report.results]}"
     assert match.status == expected, (
         f"Check '{check_name}' status mismatch: expected {expected.value}, got {match.status.value}. "
         f"Diagnostic message: {match.message}. Metrics: {match.metrics}"
@@ -64,6 +64,6 @@ def assert_metrics_contain(
     """Assert that check metrics contain the given key and optional value."""
     assert key in check_result.metrics, f"Key '{key}' not found in check metrics: {check_result.metrics}"
     if expected_val is not None:
-        assert check_result.metrics[key] == expected_val, (
-            f"Metric '{key}' expected {expected_val}, got {check_result.metrics[key]}"
-        )
+        assert (
+            check_result.metrics[key] == expected_val
+        ), f"Metric '{key}' expected {expected_val}, got {check_result.metrics[key]}"

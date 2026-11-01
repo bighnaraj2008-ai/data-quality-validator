@@ -12,11 +12,13 @@ from validator.range_checker import RangeChecker
 def test_severe_type_mismatch_integer_column_holds_strings():
     """Verify that an integer column holding arbitrary strings is flagged as schema drift."""
     schema = BaselineSchema(columns={"id": "int64", "age": "int64", "name": "object"})
-    df = pd.DataFrame({
-        "id": [1, 2, 3],
-        "age": ["invalid_str", "another_bad_val", "not_a_num"],
-        "name": ["Alice", "Bob", "Charlie"],
-    })
+    df = pd.DataFrame(
+        {
+            "id": [1, 2, 3],
+            "age": ["invalid_str", "another_bad_val", "not_a_num"],
+            "name": ["Alice", "Bob", "Charlie"],
+        }
+    )
     detector = DriftDetector()
     result = detector.check_drift(df, schema)
     assert result.status == CheckStatus.FAIL

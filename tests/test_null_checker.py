@@ -1,17 +1,18 @@
 """Unit tests for NullChecker module."""
 
 import pandas as pd
-import pytest
 
 from validator.core import CheckStatus
 from validator.null_checker import NullChecker
 
 
 def test_null_check_passes_when_no_nulls():
-    df = pd.DataFrame({
-        "id": [1, 2, 3],
-        "name": ["Alice", "Bob", "Charlie"],
-    })
+    df = pd.DataFrame(
+        {
+            "id": [1, 2, 3],
+            "name": ["Alice", "Bob", "Charlie"],
+        }
+    )
     checker = NullChecker(default_threshold=0.0)
     result = checker.check_nulls(df)
     assert result.status == CheckStatus.PASS
@@ -20,18 +21,22 @@ def test_null_check_passes_when_no_nulls():
 
 
 def test_null_check_passes_within_allowed_threshold():
-    df = pd.DataFrame({
-        "val": [1, 2, None, 4],
-    })
+    df = pd.DataFrame(
+        {
+            "val": [1, 2, None, 4],
+        }
+    )
     checker = NullChecker(default_threshold=0.30)
     result = checker.check_nulls(df)
     assert result.status == CheckStatus.PASS
 
 
 def test_null_check_fails_when_threshold_exceeded():
-    df = pd.DataFrame({
-        "val": [1, None, None, 4],
-    })
+    df = pd.DataFrame(
+        {
+            "val": [1, None, None, 4],
+        }
+    )
     checker = NullChecker(default_threshold=0.25)
     result = checker.check_nulls(df)
     assert result.status == CheckStatus.FAIL
@@ -39,10 +44,12 @@ def test_null_check_fails_when_threshold_exceeded():
 
 
 def test_null_check_fails_on_non_nullable_column():
-    df = pd.DataFrame({
-        "id": [1, None, 3],
-        "notes": ["a", None, "c"],
-    })
+    df = pd.DataFrame(
+        {
+            "id": [1, None, 3],
+            "notes": ["a", None, "c"],
+        }
+    )
     checker = NullChecker(default_threshold=0.50)
     result = checker.check_nulls(df, non_nullable_cols=["id"])
     assert result.status == CheckStatus.FAIL

@@ -1,7 +1,6 @@
 """Unit tests for DriftDetector module."""
 
 import pandas as pd
-import pytest
 
 from validator.core import BaselineSchema, CheckStatus
 from validator.drift_detector import DriftDetector

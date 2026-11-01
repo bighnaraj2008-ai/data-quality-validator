@@ -12,12 +12,14 @@ def test_memory_consumption_within_bounds():
     tracemalloc.start()
     try:
         n_rows = 25000
-        df = pd.DataFrame({
-            "id": np.arange(n_rows),
-            "val_a": np.random.rand(n_rows),
-            "val_b": np.random.rand(n_rows),
-            "label": ["test_label"] * n_rows,
-        })
+        df = pd.DataFrame(
+            {
+                "id": np.arange(n_rows),
+                "val_a": np.random.rand(n_rows),
+                "val_b": np.random.rand(n_rows),
+                "label": ["test_label"] * n_rows,
+            }
+        )
         validator = DataValidator()
         report = validator.validate_df(
             df,
