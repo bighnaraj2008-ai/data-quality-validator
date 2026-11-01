@@ -26,7 +26,16 @@ echo "Validating documentation links and syntax..."
 "$PYTHON_BIN" scripts/validate_docs.py
 echo "Documentation links verified successfully"
 
-# 3. Create temporary sample CSV
+# 3. Verify CI linter gates (flake8, sqlfluff, optional black)
+echo "Running CI static analysis smoke gates..."
+"$PYTHON_BIN" -m flake8 src tests scripts --count --max-line-length=120 --statistics
+"$PYTHON_BIN" -m sqlfluff lint sql/checks/ --dialect ansi
+if "$PYTHON_BIN" -m black --version >/dev/null 2>&1; then
+    "$PYTHON_BIN" -m black --check src tests scripts
+fi
+echo "CI static analysis smoke gates passed"
+
+# 4. Create temporary sample CSV
 cat << 'EOF' > "$TEMP_DATA"
 id,email,age,income
 1,alice@example.com,28,65000.00
@@ -38,11 +47,11 @@ EOF
 
 echo "Created synthetic dataset: $TEMP_DATA"
 
-# 4. Execute CLI validation runner
+# 5. Execute CLI validation runner
 "$PYTHON_BIN" scripts/run_validation.py --data "$TEMP_DATA" --config src/config/validator_config.yaml
 echo "Validation pipeline runner passed successfully"
 
-# 5. Generate JSON report
+# 6. Generate JSON report
 "$PYTHON_BIN" scripts/generate_report.py --input "$TEMP_DATA" --output "$TEMP_REPORT" --format json
 if [[ -f "$TEMP_REPORT" ]]; then
     echo "Telemetry report generated successfully at $TEMP_REPORT"
@@ -51,7 +60,7 @@ else
     exit 1
 fi
 
-# 6. Clean up temporary files
+# 7. Clean up temporary files
 rm -f "$TEMP_DATA" "$TEMP_REPORT"
 echo "Temporary test artifacts cleaned up"
 
