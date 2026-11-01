@@ -1,6 +1,8 @@
 # Data Quality Validator
 
-[![CI Build](https://github.com/bighnaraj2008-ai/data-quality-validator/actions/workflows/validator_ci.yml/badge.svg)](https://github.com/bighnaraj2008-ai/data-quality-validator/actions)
+[![CI Validation](https://github.com/bighnaraj2008-ai/data-quality-validator/actions/workflows/ci_validation.yml/badge.svg)](https://github.com/bighnaraj2008-ai/data-quality-validator/actions/workflows/ci_validation.yml)
+[![SQL Lint](https://github.com/bighnaraj2008-ai/data-quality-validator/actions/workflows/sql_lint.yml/badge.svg)](https://github.com/bighnaraj2008-ai/data-quality-validator/actions/workflows/sql_lint.yml)
+[![Docs Integrity](https://github.com/bighnaraj2008-ai/data-quality-validator/actions/workflows/docs_check.yml/badge.svg)](https://github.com/bighnaraj2008-ai/data-quality-validator/actions/workflows/docs_check.yml)
 [![Test Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen.svg)](#)
 [![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
