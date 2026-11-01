@@ -1,0 +1,28 @@
+# Drop-in GitHub Actions job snippet to gate downstream ETL deployments
+# using data-quality-validator.
+
+jobs:
+  data-quality-gate:
+    name: Validate Landing Dataset
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Pipeline Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Data Quality Validator
+        run: |
+          pip install data-quality-validator
+
+      - name: Run Declarative Quality Rules
+        env:
+          DQ_NULL_THRESHOLD: "0.05"
+          DQ_STRICT_SCHEMA: "true"
+        run: |
+          python scripts/run_validation.py \
+            --data data/landing/orders.csv \
+            --config examples/sample_rule_config.yaml
