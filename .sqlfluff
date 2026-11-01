@@ -3,6 +3,10 @@ dialect = ansi
 templater = raw
 max_line_length = 100
 
+# Strict SQL linting: layout, capitalisation, aliasing, join structure and
+# terminator rules are enforced. RF02/ST06/AM03/RF04 are excluded because they
+# impose semantic/qualification requirements that are impractical for
+# parameterised check templates (values are substituted at runtime).
 exclude_rules = RF02, ST06, AM03, RF04
 
 [sqlfluff:indentation]
@@ -12,3 +16,12 @@ tab_space_size = 4
 [sqlfluff:layout:type:comma]
 spacing_before = touch
 line_position = trailing
+
+[sqlfluff:rules:capitalisation.keywords]
+capitalisation_policy = upper
+
+[sqlfluff:rules:capitalisation.identifiers]
+capitalisation_policy = lower
+
+[sqlfluff:rules:capitalisation.functions]
+capitalisation_policy = upper
