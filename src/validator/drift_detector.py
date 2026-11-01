@@ -6,7 +6,6 @@ mismatches between incoming DataFrames and baseline schemas.
 
 from __future__ import annotations
 
-from typing import Any, Dict, List, Optional
 import pandas as pd
 
 from validator.core import BaselineSchema, CheckResult, CheckStatus
@@ -52,9 +51,7 @@ class DriftDetector:
             exp_type = schema.columns[col]
             act_type = str(df[col].dtype)
             if normalize_type_category(exp_type) != normalize_type_category(act_type):
-                type_mismatches.append(
-                    f"Column '{col}' expected {exp_type} but got {act_type}"
-                )
+                type_mismatches.append(f"Column '{col}' expected {exp_type} but got {act_type}")
 
         violations = []
         if missing:

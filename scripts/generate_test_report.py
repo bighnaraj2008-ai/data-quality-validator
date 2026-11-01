@@ -56,10 +56,10 @@ def main():
         if "passed" in line:
             parts = line.split()
             for i, p in enumerate(parts):
-                if p == "passed" and i > 0 and parts[i-1].isdigit():
-                    passed = int(parts[i-1])
-                if p == "failed" and i > 0 and parts[i-1].isdigit():
-                    failed = int(parts[i-1])
+                if p == "passed" and i > 0 and parts[i - 1].isdigit():
+                    passed = int(parts[i - 1])
+                if p == "failed" and i > 0 and parts[i - 1].isdigit():
+                    failed = int(parts[i - 1])
 
     total = passed + failed
     md = generate_markdown_report(total=max(total, 25), passed=max(passed, 25), failed=failed, duration_sec=duration)

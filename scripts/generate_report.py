@@ -9,14 +9,12 @@ from __future__ import annotations
 
 import argparse
 from datetime import datetime, timezone
-import json
 from pathlib import Path
 import sys
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 
-from config.loader import ConfigLoader
-from validator.core import BaselineSchema, DataValidator
+from validator.core import BaselineSchema, DataValidator  # noqa: E402
 
 
 def parse_args() -> argparse.Namespace:

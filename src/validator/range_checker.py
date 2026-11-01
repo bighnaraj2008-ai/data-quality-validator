@@ -6,7 +6,7 @@ configured minimum and maximum boundary thresholds.
 
 from __future__ import annotations
 
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict
 import pandas as pd
 
 from validator.core import CheckResult, CheckStatus
@@ -47,31 +47,31 @@ class RangeChecker:
                 under_count = int(under_mask.sum())
                 if under_count > 0:
                     col_violations += under_count
-                    violations.append(
-                        f"Column '{col}' has {under_count} values below minimum ({min_val})"
-                    )
+                    violations.append(f"Column '{col}' has {under_count} values below minimum ({min_val})")
 
             if max_val is not None:
                 over_mask = series > max_val
                 over_count = int(over_mask.sum())
                 if over_count > 0:
                     col_violations += over_count
-                    violations.append(
-                        f"Column '{col}' has {over_count} values above maximum ({max_val})"
-                    )
+                    violations.append(f"Column '{col}' has {over_count} values above maximum ({max_val})")
 
-            metrics["columns_checked"].append({
-                "column": col,
-                "min_bound": min_val,
-                "max_bound": max_val,
-                "violations": col_violations,
-            })
+            metrics["columns_checked"].append(
+                {
+                    "column": col,
+                    "min_bound": min_val,
+                    "max_bound": max_val,
+                    "violations": col_violations,
+                }
+            )
 
             if col_violations > 0:
-                offending_samples.append({
-                    "column": col,
-                    "violation_count": col_violations,
-                })
+                offending_samples.append(
+                    {
+                        "column": col,
+                        "violation_count": col_violations,
+                    }
+                )
 
         status = CheckStatus.FAIL if violations else CheckStatus.PASS
         msg = (

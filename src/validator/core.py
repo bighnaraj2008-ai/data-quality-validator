@@ -22,6 +22,7 @@ logger = logging.getLogger(__name__)
 
 class CheckStatus(str, Enum):
     """Execution status for an individual validation check."""
+
     PASS = "PASS"
     WARN = "WARN"
     FAIL = "FAIL"

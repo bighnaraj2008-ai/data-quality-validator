@@ -14,8 +14,8 @@ from pathlib import Path
 # Add src to path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 
-from config.loader import ConfigLoader
-from validator.core import BaselineSchema, CheckStatus, DataValidator
+from config.loader import ConfigLoader  # noqa: E402
+from validator.core import BaselineSchema, CheckStatus, DataValidator  # noqa: E402
 
 
 def parse_args() -> argparse.Namespace:
@@ -24,7 +24,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--schema", "-s", help="Path to baseline schema JSON file")
     parser.add_argument("--config", "-c", help="Path to validator configuration YAML file")
     parser.add_argument("--null-threshold", type=float, help="Override default null percentage threshold (0.0 - 1.0)")
-    parser.add_argument("--strict", action="store_true", help="Enforce strict schema validation (no unexpected columns)")
+    parser.add_argument(
+        "--strict", action="store_true", help="Enforce strict schema validation (no unexpected columns)"
+    )
     return parser.parse_args()
 
 
@@ -48,24 +50,24 @@ def main() -> int:
         schema = BaselineSchema.from_json_file(schema_path)
 
     validator = DataValidator(schema=schema, null_threshold=null_th, strict_schema=is_strict)
-    
+
     ranges = config.get("rules", {}).get("ranges")
     non_nullable = config.get("rules", {}).get("null_checks", {}).get("non_nullable")
 
-    print(f"================================================================")
+    print("================================================================")
     print(f" DATA QUALITY VALIDATION RUNNER: {csv_file.name}")
-    print(f"================================================================")
+    print("================================================================")
     report = validator.validate_csv(csv_file, column_ranges=ranges, non_nullable_cols=non_nullable)
 
     for r in report.results:
         status_tag = f"[{r.status.value}]"
         print(f"{status_tag:<8} {r.name:<18} : {r.message} ({r.execution_time_ms:.1f} ms)")
 
-    print(f"----------------------------------------------------------------")
+    print("----------------------------------------------------------------")
     print(f"Total Rows: {report.total_rows} | Total Checks: {len(report.results)}")
     print(f"Passed: {report.passed_checks} | Warnings: {report.warning_checks} | Failed: {report.failed_checks}")
     print(f"Overall Status: {report.overall_status.value} (took {report.duration_ms:.1f} ms)")
-    print(f"================================================================")
+    print("================================================================")
 
     return 0 if report.overall_status in (CheckStatus.PASS, CheckStatus.WARN) else 1
 

@@ -6,7 +6,7 @@ and flags non-nullable column violations.
 
 from __future__ import annotations
 
-from typing import Any, Dict, List, Optional
+from typing import List, Optional
 import pandas as pd
 
 from validator.core import CheckResult, CheckStatus
@@ -45,14 +45,10 @@ class NullChecker:
         for col, rate in column_null_rates.items():
             count = column_null_counts[col]
             if col in non_nullable and count > 0:
-                violations.append(
-                    f"Non-nullable column '{col}' has {count} nulls ({rate:.1%})"
-                )
+                violations.append(f"Non-nullable column '{col}' has {count} nulls ({rate:.1%})")
                 offending_samples.append({"column": col, "null_count": count, "rate": round(rate, 4)})
             elif rate > threshold:
-                violations.append(
-                    f"Column '{col}' null rate {rate:.1%} exceeds threshold {threshold:.1%}"
-                )
+                violations.append(f"Column '{col}' null rate {rate:.1%} exceeds threshold {threshold:.1%}")
                 offending_samples.append({"column": col, "null_count": count, "rate": round(rate, 4)})
 
         status = CheckStatus.FAIL if violations else CheckStatus.PASS

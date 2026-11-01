@@ -10,6 +10,7 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parent.parent
 CONFIG_PATH = REPO_ROOT / "src" / "config" / "validator_config.yaml"
 
+
 def generate_markdown_docs():
     if not CONFIG_PATH.exists():
         print(f"Error: {CONFIG_PATH} not found.")
@@ -39,6 +40,7 @@ def generate_markdown_docs():
     output_path = REPO_ROOT / "docs" / "SCHEMA_REFERENCE.md"
     output_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
     print(f"Schema documentation generated at {output_path}")
+
 
 if __name__ == "__main__":
     generate_markdown_docs()

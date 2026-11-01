@@ -14,23 +14,25 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
-LINK_PATTERN = re.compile(r'\[([^\]]+)\]\(([^\)]+)\)')
-CORRUPT_PATTERNS = [re.compile(r'Ã|Â|â€™|Ã¢')]
+LINK_PATTERN = re.compile(r"\[([^\]]+)\]\(([^\)]+)\)")
+CORRUPT_PATTERNS = [re.compile(r"Ã|Â|â€™|Ã¢")]
 
-EXCLUDED_DIRS = {'.git', '.github', 'venv', '.venv', '__pycache__', '.pytest_cache', 'build', 'dist', 'node_modules'}
+EXCLUDED_DIRS = {".git", ".github", "venv", ".venv", "__pycache__", ".pytest_cache", "build", "dist", "node_modules"}
+
 
 def find_markdown_files():
     md_files = []
     for root, dirs, files in os.walk(REPO_ROOT):
         dirs[:] = [d for d in dirs if d not in EXCLUDED_DIRS]
         for f in files:
-            if f.endswith('.md'):
+            if f.endswith(".md"):
                 md_files.append(Path(root) / f)
     return sorted(md_files)
 
+
 def validate_links(file_path):
     errors = []
-    content = file_path.read_text(encoding='utf-8', errors='replace')
+    content = file_path.read_text(encoding="utf-8", errors="replace")
 
     for pattern in CORRUPT_PATTERNS:
         match = pattern.search(content)
@@ -42,10 +44,10 @@ def validate_links(file_path):
         link_target = link_target.strip()
 
         # Skip external web URLs, anchors, mailto, and dummy links
-        if link_target.startswith(('http://', 'https://', 'mailto:', '#', '<')):
+        if link_target.startswith(("http://", "https://", "mailto:", "#", "<")):
             continue
 
-        target_path_part = link_target.split('#')[0]
+        target_path_part = link_target.split("#")[0]
         if not target_path_part:
             continue
 
@@ -57,6 +59,7 @@ def validate_links(file_path):
             errors.append(f"Broken link '{link_target}' in text '[{link_text}]'")
 
     return errors
+
 
 def main():
     print("=" * 60)
@@ -87,6 +90,7 @@ def main():
     else:
         print(f"SUCCESS: All {total_files} Markdown files passed validation!")
         sys.exit(0)
+
 
 if __name__ == "__main__":
     main()

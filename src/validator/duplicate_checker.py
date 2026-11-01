@@ -6,7 +6,7 @@ across incoming DataFrames.
 
 from __future__ import annotations
 
-from typing import Any, Dict, List, Optional
+from typing import List, Optional
 import pandas as pd
 
 from validator.core import CheckResult, CheckStatus
@@ -38,9 +38,9 @@ class DuplicateChecker:
                     message=f"Primary key column(s) not found in dataset: {missing_pk}",
                     metrics={"missing_columns": missing_pk},
                 )
-            
+
             duplicates_mask = df.duplicated(subset=primary_key, keep=False)
-            dup_count = int(df.duplicated(subset=primary_key, keep='first').sum())
+            dup_count = int(df.duplicated(subset=primary_key, keep="first").sum())
             key_name = ", ".join(primary_key)
 
             if dup_count > 0:
