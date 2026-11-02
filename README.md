@@ -352,6 +352,13 @@ For complete class hierarchies, method signatures, and exceptions, see the [Pyth
 
 ---
 
+## Acknowledgments & Technical References
+
+- Built on modern open-source Python and SQL tooling: `pandas`, `numpy`, `pydantic`, `SQLAlchemy`, `pytest`, `black`, `flake8`, and `sqlfluff`.
+- Designed cleanly for dual-mode validation across local DataFrames and analytical warehouses (PostgreSQL, Snowflake, BigQuery, DuckDB, SQLite).
+
+---
+
 ## Contributing
 
 We welcome community contributions, custom check modules, and dialect adapters!
