@@ -6,6 +6,8 @@ We provide security updates and patches for the following versions:
 
 | Version | Supported          |
 |:--------|:-------------------|
+| 1.0.x   | :white_check_mark: |
+| 0.5.x   | :white_check_mark: |
 | 0.2.x   | :white_check_mark: |
 | 0.1.x   | :x:                |
 
