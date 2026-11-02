@@ -191,6 +191,58 @@ python scripts/generate_report.py --input sample_data.csv --output reports/valid
 pytest tests/ -v
 ```
 
+### 4. Performance Benchmarking
+
+Run the check-execution throughput and latency harness under heavy
+multi-column anomaly detection loads to measure rows-per-second processing
+capacity and per-check p50/p95 latency:
+
+```bash
+# Benchmark 1k / 10k / 50k / 100k rows, 3 iterations each
+python tests/benchmarks/bench_validator.py --rows 1000 10000 50000 100000 --iterations 3
+
+# Write machine-readable telemetry for CI dashboards and data engineering
+python tests/benchmarks/bench_validator.py --rows 50000 --output reports/benchmark_telemetry.json
+
+# Measure heap memory allocation profile
+python tests/benchmarks/bench_memory.py --rows 1000 10000 50000
+```
+
+The harness emits a telemetry table (quality score, throughput in rows/s,
+check latency p50/p95, and per-check status) and exits non-zero if throughput
+falls below the acceptable floor or any check errors out. Benchmark results
+are documented in [`docs/BENCHMARK_RESULTS.md`](docs/BENCHMARK_RESULTS.md) and [`docs/BENCHMARK_REPORT.md`](docs/BENCHMARK_REPORT.md).
+
+---
+
+## Production Utility Scripts
+
+| Script | Purpose |
+|:-------|:--------|
+| `scripts/export_reports.py` | Export validation failure logs into structured CSV or JSON archives for data engineering pipelines. |
+| `scripts/prune_reports.py` | Report rotation and historical validation log pruning (max-age, keep-latest, dry-run controls). |
+| `scripts/generate_telemetry_report.py` | Generate Markdown executive telemetry summaries from JSON reports. |
+
+### Export Failure Reports
+
+```bash
+# Export all FAIL/ERROR check records from a single report
+python scripts/export_reports.py --input reports/validation_report.json --output archives/failures.csv --format csv
+
+# Export from every report in a directory, then archive the sources
+python scripts/export_reports.py --input reports/ --output archives/failures.json --format json --statuses FAIL,ERROR --archive-dir reports/processed
+```
+
+### Prune Historical Reports
+
+```bash
+# Inspect what would be pruned without deleting anything
+python scripts/prune_reports.py --reports-dir reports/ --max-age-days 30 --keep-latest 50 --min-keep 10 --dry-run
+
+# Execute report rotation
+python scripts/prune_reports.py --reports-dir reports/ --max-age-days 30 --keep-latest 50 --min-keep 10
+```
+
 ---
 
 ## Code Style, Linting & CI Automation
