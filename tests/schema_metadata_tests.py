@@ -46,3 +46,16 @@ def test_repository_metadata_and_linter_files_exist():
     """Verify core packaging, linter, and governance files exist."""
     for rel in [".sqlfluff", "pyproject.toml", ".gitignore", "LICENSE", "SECURITY.md"]:
         assert (REPO_ROOT / rel).exists(), f"Missing repository metadata file: {rel}"
+
+
+def test_day5_benchmarks_and_utilities_exist():
+    """Verify Day 5 benchmark harnesses and report utilities are present."""
+    for rel in [
+        "tests/benchmarks/bench_validator.py",
+        "tests/benchmarks/bench_memory.py",
+        "scripts/export_reports.py",
+        "scripts/prune_reports.py",
+        "docs/BENCHMARK_RESULTS.md",
+        "docs/PRODUCTION_CHECKLIST.md",
+    ]:
+        assert (REPO_ROOT / rel).exists(), f"Missing Day 5 artifact: {rel}"
