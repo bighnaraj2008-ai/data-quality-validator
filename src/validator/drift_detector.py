@@ -32,6 +32,14 @@ class DriftDetector:
         self.strict = strict
 
     def check_drift(self, df: pd.DataFrame, schema: BaselineSchema) -> CheckResult:
+        """Compare DataFrame columns and normalized dtypes against baseline schema."""
+        if df is None:
+            return CheckResult(
+                name="schema_drift",
+                status=CheckStatus.ERROR,
+                message="Input DataFrame is None; cannot evaluate schema drift.",
+                metrics={},
+            )
         if not schema or not schema.columns:
             return CheckResult(
                 name="schema_drift",
