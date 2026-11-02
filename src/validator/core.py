@@ -187,13 +187,15 @@ class DataValidator:
         column_ranges: Optional[Dict[str, Dict[str, float]]] = None,
         non_nullable_cols: Optional[List[str]] = None,
     ) -> ValidationReport:
+        """Execute enabled data quality checks over an in-memory DataFrame."""
         from validator.drift_detector import DriftDetector
-        from validator.null_checker import NullChecker
         from validator.duplicate_checker import DuplicateChecker
+        from validator.null_checker import NullChecker
         from validator.range_checker import RangeChecker
 
         start_time = time.perf_counter()
         results: List[CheckResult] = []
+        pk_cols = self.schema.primary_key if self.schema else None
 
         # 1. Schema Drift Check
         if self.schema:
@@ -215,7 +217,6 @@ class DataValidator:
         )
 
         # 3. Duplicate Row / Key Check
-        pk_cols = self.schema.primary_key if self.schema else None
         duplicate_checker = DuplicateChecker()
         results.append(
             self._execute_check(
