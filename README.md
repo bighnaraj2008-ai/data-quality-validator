@@ -387,6 +387,7 @@ We welcome community contributions, custom check modules, and dialect adapters!
 | [SQL Check Catalog](docs/SQL_CHECK_CATALOG.md) | [Incident Playbook](docs/INCIDENT_PLAYBOOK.md) | [Fixture Guide](docs/FIXTURE_GUIDE.md) | [Data Governance](docs/DATA_GOVERNANCE.md) |
 | [SQL Checks Guide](docs/SQL_CHECKS_GUIDE.md) | [Diagnostics Guide](docs/DIAGNOSTICS.md) | [Benchmark Template](docs/BENCHMARK_TEMPLATE.md) | [Engineering Glossary](docs/GLOSSARY.md) |
 | [Performance Tuning](docs/PERFORMANCE_TUNING.md) | [Schema Migration](docs/MIGRATION_V2.md) | [Throughput Report](docs/BENCHMARK_REPORT.md) | [Frequently Asked Questions](docs/FAQ.md) |
-| [CI Runner Benchmarks](docs/BENCHMARK_CI.md) | [CI Automation FAQ](docs/FAQ_AUTOMATION.md) |
+| [CI Runner Benchmarks](docs/BENCHMARK_CI.md) | [CI Automation FAQ](docs/FAQ_AUTOMATION.md) | [Benchmark Results](docs/BENCHMARK_RESULTS.md) | [Production Checklist](docs/PRODUCTION_CHECKLIST.md) |
+| [CI/CD Pipeline](docs/CI_CD_PIPELINE.md) | [CI Troubleshooting](docs/TROUBLESHOOTING_CI.md) | [Report Archive Policy](docs/ARCHIVE_POLICY.md) | [Linter Standards](docs/LINTER_STANDARDS.md) |
 
 <!-- Project 2 (data-quality-validator) Day 4 CI/CD & Linting Automation Sprint Finalized -->
