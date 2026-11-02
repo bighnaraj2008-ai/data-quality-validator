@@ -24,6 +24,7 @@ class NullChecker:
         custom_threshold: Optional[float] = None,
         non_nullable_cols: Optional[List[str]] = None,
     ) -> CheckResult:
+        """Evaluate null counts and rates across columns in a single vectorized pass."""
         threshold = self.default_threshold if custom_threshold is None else custom_threshold
         non_nullable = set(non_nullable_cols or [])
 
@@ -36,8 +37,9 @@ class NullChecker:
                 metrics={"total_rows": 0, "violated_columns": []},
             )
 
-        column_null_counts = df.isnull().sum().to_dict()
-        column_null_rates = {col: count / total_rows for col, count in column_null_counts.items()}
+        column_null_counts = df.isna().sum().to_dict()
+        inv_rows = 1.0 / total_rows
+        column_null_rates = {col: count * inv_rows for col, count in column_null_counts.items()}
 
         violations = []
         offending_samples = []
