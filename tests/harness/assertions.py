@@ -71,4 +71,5 @@ def assert_metrics_contain(
 
 def assert_throughput_above(throughput_rps: float, min_rps: float = 1_000.0) -> None:
     """Assert that benchmark throughput exceeds the minimum rows-per-second floor."""
-    assert throughput_rps >= min_rps, f"Throughput {throughput_rps:.2f} rows/s fell below floor {min_rps:.2f} rows/s"
+    msg = f"[THROUGHPUT FAILURE] Observed={throughput_rps:,.2f} rows/s | Required>={min_rps:,.2f} rows/s"
+    assert throughput_rps >= min_rps, msg
