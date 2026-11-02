@@ -58,6 +58,12 @@ class MockConnection:
         """Register a pandas DataFrame as a queryable SQLite table."""
         df.to_sql(table_name, self._conn, if_exists="replace", index=False)
 
+    def count_rows(self, table_name: str) -> int:
+        """Return total row count for a registered in-memory table."""
+        cur = self.execute(f"SELECT COUNT(*) FROM {table_name}")
+        row = cur.fetchone()
+        return int(row[0]) if row else 0
+
     def commit(self) -> None:
         self._conn.commit()
 
