@@ -150,6 +150,7 @@ For query templates, dialect compatibility matrices (Postgres, SQLite, Snowflake
 | [API Reference](docs/API_REFERENCE.md) | Python API | Core classes, checkers, and config loader interfaces |
 | [Deployment Runbook](docs/DEPLOYMENT_GUIDE.md) | Operations | Containerization, Kubernetes CronJobs, Airflow DAGs |
 | [Release Process Runbook](docs/RELEASE_PROCESS.md) | Operations | Semantic version bumping, tagging, and PyPI/GitHub releases |
+| [Production Checklist](docs/PRODUCTION_CHECKLIST.md) | Operations | Pre-production readiness verification checklist |
 | [Diagnostics Playbook](docs/DIAGNOSTICS.md) | Troubleshooting | Isolating failed checks and SQL forensics queries |
 | [Security Hardening](docs/SECURITY_HARDENING.md) | Security | Credential protection and least-privilege roles |
 | [Schema Migration Guide](docs/MIGRATION_V2.md) | Upgrades | Upgrading from rule schema v1.0 to v2.0 |
