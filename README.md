@@ -2,11 +2,12 @@
 
 [![CI Validation](https://github.com/bighnaraj2008-ai/data-quality-validator/actions/workflows/ci_validation.yml/badge.svg)](https://github.com/bighnaraj2008-ai/data-quality-validator/actions/workflows/ci_validation.yml)
 [![SQL Lint](https://github.com/bighnaraj2008-ai/data-quality-validator/actions/workflows/sql_lint.yml/badge.svg)](https://github.com/bighnaraj2008-ai/data-quality-validator/actions/workflows/sql_lint.yml)
+[![Benchmarks](https://github.com/bighnaraj2008-ai/data-quality-validator/actions/workflows/benchmarks.yml/badge.svg)](https://github.com/bighnaraj2008-ai/data-quality-validator/actions/workflows/benchmarks.yml)
 [![Docs Integrity](https://github.com/bighnaraj2008-ai/data-quality-validator/actions/workflows/docs_check.yml/badge.svg)](https://github.com/bighnaraj2008-ai/data-quality-validator/actions/workflows/docs_check.yml)
 [![Test Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen.svg)](#)
 [![Python Version](https://img.shields.io/badge/python-3.9%20%7C%203.10%20%7C%203.11%20%7C%203.12-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Code Style: Flake8](https://img.shields.io/badge/code%20style-flake8-green.svg)](https://flake8.pycqa.org/)
+[![Code Style: Black & Flake8](https://img.shields.io/badge/code%20style-black%20%2B%20flake8-000000.svg)](https://github.com/psf/black)
 [![Release v1.0.0](https://img.shields.io/badge/release-v1.0.0--stable-green.svg)](https://github.com/bighnaraj2008-ai/data-quality-validator/releases)
 [![Day 3 Documentation](https://img.shields.io/badge/docs-Day%203%20Sprint-blueviolet.svg)](#)
 [![100 Day Maintenance](https://img.shields.io/badge/maintenance-100--day%20cycle-orange.svg)](#)
