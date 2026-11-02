@@ -5,13 +5,15 @@ All notable changes to the `data-quality-validator` project will be documented i
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.0.0] - 2026-11-12
+## [1.0.0] - 2026-11-02
 
 ### Added
 - Throughput & latency benchmarking harness (`tests/benchmarks/bench_validator.py`) measuring rows-per-second processing capacity and per-check p50/p95 latency under heavy multi-column anomaly detection loads, with optional JSON telemetry archive output.
 - `scripts/export_reports.py`: exports validation failure logs into structured CSV or JSON archives for data engineering pipelines, with status filtering and source report archiving.
 - `scripts/prune_reports.py`: report rotation and historical validation log pruning with max-age-days, keep-latest, min-keep, and dry-run controls.
-- `numpy` dev dependency for benchmark and performance test suites.
+- `numpy` dev dependency and standard `lint`/`all` dependency groups in `pyproject.toml`.
+- Memory allocation profiler (`tests/benchmarks/bench_memory.py`), 24-hour stability stress test (`tests/stress/test_long_run.py`), and automated performance regression workflow (`.github/workflows/benchmarks.yml`).
+- Operational guides (`docs/BENCHMARK_RESULTS.md`, `docs/PRODUCTION_CHECKLIST.md`, `docs/ARCHIVE_POLICY.md`) and master workspace cleanup (`scripts/clean_all.py`).
 
 ### Changed
 - Bumped release version to `1.0.0` across `pyproject.toml` and `src/validator/__init__.py`.
@@ -92,3 +94,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 <!-- Day 3 Advanced Documentation Sprint Finalized -->
 
 <!-- Day 4 CI/CD & Linting Automation Milestone Locked In (2026-11-01) -->
+
+<!-- Project 2 (data-quality-validator) Day 5 v1.0.0 Release & Benchmark Sprint Finalized -->
