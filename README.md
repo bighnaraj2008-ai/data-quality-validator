@@ -1,4 +1,4 @@
-# Data Quality Validator
+# Data Quality Validator (`v1.0.0`)
 
 [![CI Validation](https://github.com/bighnaraj2008-ai/data-quality-validator/actions/workflows/ci_validation.yml/badge.svg)](https://github.com/bighnaraj2008-ai/data-quality-validator/actions/workflows/ci_validation.yml)
 [![SQL Lint](https://github.com/bighnaraj2008-ai/data-quality-validator/actions/workflows/sql_lint.yml/badge.svg)](https://github.com/bighnaraj2008-ai/data-quality-validator/actions/workflows/sql_lint.yml)
