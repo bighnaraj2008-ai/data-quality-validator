@@ -40,3 +40,11 @@ covering new validation checks, pure SQL check templates, bug fixes, and documen
 2. Write unit tests validating your changes.
 3. Run the smoke test: `bash scripts/smoke_test.sh`.
 4. Submit a Pull Request targeting the `main` branch with a clear description of the enhancement.
+
+---
+
+## 4. Benchmarking & Release Readiness (`v1.0.0`)
+
+- Run `./scripts/run_linter.sh` (`flake8`, `black --check`, `sqlfluff`) before committing.
+- Run `./scripts/run_benchmarks.sh` to verify zero throughput regression.
+- Ensure all Markdown guides pass `python scripts/validate_docs.py`.
