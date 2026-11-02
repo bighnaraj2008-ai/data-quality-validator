@@ -67,3 +67,8 @@ def assert_metrics_contain(
         assert (
             check_result.metrics[key] == expected_val
         ), f"Metric '{key}' expected {expected_val}, got {check_result.metrics[key]}"
+
+
+def assert_throughput_above(throughput_rps: float, min_rps: float = 1_000.0) -> None:
+    """Assert that benchmark throughput exceeds the minimum rows-per-second floor."""
+    assert throughput_rps >= min_rps, f"Throughput {throughput_rps:.2f} rows/s fell below floor {min_rps:.2f} rows/s"
