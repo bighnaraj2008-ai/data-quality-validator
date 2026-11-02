@@ -1,4 +1,4 @@
-"""CI environment diagnostic health check script."""
+"""CI and runtime environment diagnostic health check script."""
 
 import importlib
 import sys
@@ -6,7 +6,7 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
-REQUIRED_MODULES = ["pandas", "yaml", "pydantic", "sqlalchemy", "pytest", "flake8"]
+REQUIRED_MODULES = ["pandas", "numpy", "yaml", "pydantic", "sqlalchemy", "pytest", "flake8"]
 REQUIRED_FILES = [
     ".sqlfluff",
     "pyproject.toml",
@@ -14,11 +14,15 @@ REQUIRED_FILES = [
     "src/config/validator_config.yaml",
     ".github/workflows/ci_validation.yml",
     ".github/workflows/sql_lint.yml",
+    ".github/workflows/benchmarks.yml",
+    "tests/benchmarks/bench_validator.py",
+    "scripts/export_reports.py",
+    "scripts/prune_reports.py",
 ]
 
 
 def run_health_check() -> int:
-    """Inspect runtime dependencies and repository configuration artifacts."""
+    """Inspect runtime dependencies, workflows, and Day 5 utility artifacts."""
     print(f"Python version: {sys.version.split()[0]}")
     failures = 0
 
