@@ -20,6 +20,23 @@ A high-performance, modular data validation and quality assurance framework desi
 - **In-Memory Engine**: High-throughput validation across Pandas / PyArrow dataframes.
 - **In-Database SQL Engine**: Pure SQL check templates for direct execution in data warehouses (Snowflake, BigQuery, PostgreSQL, DuckDB, SQLite).
 
+---
+
+## Table of Contents
+
+1. [Overview](#overview)
+2. [Architecture & Data Flow](#architecture--data-flow)
+3. [Declarative Rule Authoring](#declarative-rule-authoring)
+4. [Pure SQL Check Catalog](#pure-sql-check-catalog)
+5. [Quickstart Guide & Benchmarking](#quickstart-guide)
+6. [Production Utility Scripts](#production-utility-scripts)
+7. [Code Style, Linting & CI Automation](#code-style-linting--ci-automation)
+8. [Python API Reference](#python-api-reference)
+9. [Troubleshooting & Diagnostics](#troubleshooting--diagnostics)
+10. [Project Status & Roadmap](#project-status--roadmap)
+11. [Contributing, License & Security](#contributing)
+12. [Repository Documentation Index](#repository-documentation-index)
+
 ### Key Features
 - **Null Value Inspection**: Quantifies missing data against configurable threshold ratios.
 - **Duplicate Detection**: Identifies row-level duplicates and candidate primary key collisions.
