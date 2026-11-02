@@ -44,3 +44,16 @@ of rows directly within Snowflake, BigQuery, or PostgreSQL without memory limits
 #### Q: What is the average throughput for in-memory checks?
 **A:** The in-memory engine achieves throughput > 10,000 rows/second for multi-rule
 validation suites on standard modern CPUs.
+
+---
+
+### Benchmarking & Operations
+
+#### Q: How do I verify throughput stability before a release?
+**A:** Execute `./scripts/run_benchmarks.sh` or run
+`python tests/benchmarks/bench_validator.py --rows 1000 10000 50000 100000 --iterations 3`.
+See [`docs/BENCHMARK_RESULTS.md`](BENCHMARK_RESULTS.md) for reference baselines.
+
+#### Q: How do I prevent historical telemetry JSON reports from filling disk?
+**A:** Schedule `scripts/prune_reports.py --reports-dir reports/ --max-age-days 30 --keep-latest 50`
+and archive extracted failure records using `scripts/export_reports.py`.
