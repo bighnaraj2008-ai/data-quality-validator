@@ -151,6 +151,7 @@ For query templates, dialect compatibility matrices (Postgres, SQLite, Snowflake
 | [Deployment Runbook](docs/DEPLOYMENT_GUIDE.md) | Operations | Containerization, Kubernetes CronJobs, Airflow DAGs |
 | [Release Process Runbook](docs/RELEASE_PROCESS.md) | Operations | Semantic version bumping, tagging, and PyPI/GitHub releases |
 | [Production Checklist](docs/PRODUCTION_CHECKLIST.md) | Operations | Pre-production readiness verification checklist |
+| [Report Archive Policy](docs/ARCHIVE_POLICY.md) | Operations | Failure extraction, log rotation, and retention tiers |
 | [Diagnostics Playbook](docs/DIAGNOSTICS.md) | Troubleshooting | Isolating failed checks and SQL forensics queries |
 | [Security Hardening](docs/SECURITY_HARDENING.md) | Security | Credential protection and least-privilege roles |
 | [Schema Migration Guide](docs/MIGRATION_V2.md) | Upgrades | Upgrading from rule schema v1.0 to v2.0 |
