@@ -60,7 +60,14 @@ else
     exit 1
 fi
 
-# 7. Clean up temporary files
+# 7. Verify benchmark harness and report utilities
+echo "Verifying benchmark harness & report utility CLIs..."
+"$PYTHON_BIN" tests/benchmarks/bench_validator.py --rows 1000 --iterations 1 --no-asserts
+"$PYTHON_BIN" scripts/export_reports.py --help >/dev/null
+"$PYTHON_BIN" scripts/prune_reports.py --help >/dev/null
+echo "Benchmark harness & report utilities verified"
+
+# 8. Clean up temporary files
 rm -f "$TEMP_DATA" "$TEMP_REPORT"
 echo "Temporary test artifacts cleaned up"
 
