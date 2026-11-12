@@ -52,14 +52,14 @@ jobs:
           python tests/benchmarks/bench_validator.py --rows 1000 --iterations 1 --no-asserts
 
       - name: Upload Test Results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         if: always()
         with:
           name: test-results-py${{ matrix.python-version }}
           path: test-results-${{ matrix.python-version }}.xml
 
       - name: Upload Coverage Report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         if: always()
         with:
           name: coverage-py${{ matrix.python-version }}

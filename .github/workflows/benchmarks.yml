@@ -36,7 +36,7 @@ jobs:
           python tests/benchmarks/bench_memory.py --rows 1000 10000
 
       - name: Upload Benchmark Telemetry Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         if: always()
         with:
           name: benchmark-telemetry
